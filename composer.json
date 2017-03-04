@@ -1,0 +1,33 @@
+{
+    "name": "dharple/detox-php",
+    "description": "Library and binary for translating problematic filenames into tame ones.",
+    "type": "library",
+    "require": {
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/php-code-coverage": "*",
+        "phpunit/phpunit": "^6.0 || ^5.7 || ^4.8"
+    },
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Doug Harple",
+            "email": "detox.dharple@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": { 
+            "Detox\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DetoxTest\\": "tests/"
+        }
+    }
+}

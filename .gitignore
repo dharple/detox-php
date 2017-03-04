@@ -1,0 +1,4 @@
+/vendor/
+/coverage/
+scrap.php
+composer.lock

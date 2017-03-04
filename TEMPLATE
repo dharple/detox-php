@@ -1,0 +1,26 @@
+/**
+ * Detox (https://github.com/dharple/detox/)
+ *
+ * Long description for file (if any)...
+ *
+ * @link      https://github.com/dharple/detox/
+ * @copyright Copyright (c) 2017 Doug Harple
+ * @license   https://github.com/dharple/detox/blob/master/LICENSE
+ * @since     File available since Release 2.0.0
+ */
+
+namespace Detox\Diet;
+
+/**
+ * Short description for class
+ *
+ * Long description for class (if any)...
+ *
+ * @since      Class available since Release 2.0.0
+ * @deprecated Class deprecated in Release 3.0.0
+ */
+abstract class Juice
+{
+
+}
+
