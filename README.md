@@ -2,6 +2,8 @@
 
 # Construction Zone
 
+The main detox project is here: [https://github.com/dharple/detox](https://github.com/dharple/detox)
+
 Detox is in the middle of a major rewrite.  This is the branch where the
 rewrite is occurring.  There is no guarantee that any code contained in here
 will work at this point in time.
