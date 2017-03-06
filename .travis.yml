@@ -10,6 +10,7 @@ php:
 
 install:
   - travis_retry composer install --no-interaction
+  - iconv -V
 
 script:
   - vendor/bin/phpunit
