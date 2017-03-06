@@ -64,11 +64,11 @@ class AsciiTest
 			'output' => '+, ?, ?, o, 3-4, --, -5, +5, (TM), ...'
 		],
 
-//		Breaks on travisci
-//		[
-//			'input' => 'Hello world, Καλημέρα κόσμε, コンニチハ',
-//			'output' => 'Hello world, ????u??? ???u?, ?????',
-//		],
+		[
+			'input' => 'Hello world, Καλημέρα κόσμε, コンニチハ',
+			'output' => 'Hello world, ????u??? ???u?, ?????',
+			'minimumIconvVersion' => '2.23',
+		],
 
 		[
 			'input' => '⡌⠁⠧⠑ ⠼⠁⠒  ⡍⠜⠇⠑⠹⠰⠎ ⡣⠕⠌',
@@ -77,7 +77,8 @@ class AsciiTest
 
 		[
 			'input' => 'ði ıntəˈnæʃənəl fəˈnɛtık əsoʊsiˈeıʃn',
-			'output' => 'di int?\'nae??n?l f?\'netik ?so?si\'ei?n'
+			'output' => 'di int?\'nae??n?l f?\'netik ?so?si\'ei?n',
+			'minimumIconvVersion' => '2.23',
 		],
 
 	];
@@ -98,6 +99,10 @@ class AsciiTest
 		$filter = new Ascii();
 
 		foreach ($this->tests as $test) {
+			if (isset($test['minimumIconvVersion']) && version_compare($test['minimumIconvVersion'], ICONV_VERSION, '>')) {
+				$this->markTestIncomplete('Some strings require iconv > ' . $test['minimumIconvVersion'] . '; system version is: '. ICONV_VERSION);
+				continue;
+			}
 			foreach ($encodings as $encoding) {
 				foreach ($paths as $path) {
 					foreach ([true, false] as $byCharacter) {
@@ -211,6 +216,10 @@ class AsciiTest
 		$filter = new Ascii();
 
 		foreach ($this->tests as $test) {
+			if (isset($test['minimumIconvVersion']) && version_compare($test['minimumIconvVersion'], ICONV_VERSION, '>')) {
+				$this->markTestIncomplete('Some strings require iconv > ' . $test['minimumIconvVersion'] . '; system version is: '. ICONV_VERSION);
+				continue;
+			}
 			foreach ($encodings as $encoding) {
 				foreach ($paths as $path) {
 					foreach ([true, false] as $byCharacter) {
