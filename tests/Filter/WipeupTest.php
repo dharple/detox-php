@@ -163,7 +163,7 @@ class WipeupTest
 							$this->assertEquals(
 								$expected,
 								$filter->filter($original, $encoding),
-								'Wipeup filter failed.  Encoding is set to: ' . $encoding .
+								'Wipeup filter failed.  Encoding is set to: ' . $encoding . ', source is: ' . $test['input'] .
 								', remove trailing: ' . ($removeTrailing ? 'enabled' : 'disabled') .
 								', remove leading: ' . ($removeLeading ? 'enabled' : 'disabled')
 							);

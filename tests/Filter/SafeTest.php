@@ -232,7 +232,7 @@ class SafeTest
 					$this->assertEquals(
 						$expected,
 						$filter->filter($original, $encoding),
-						'Safe filter failed.  Encoding is set to: ' . $encoding
+						'Safe filter failed.  Encoding is set to: ' . $encoding . ', source is: ' . $test['input']
 					);
 				}
 			}

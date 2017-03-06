@@ -98,6 +98,16 @@ class Wipeup
 	}
 
 	/**
+	 * Returns the current state of $removeTrailing.
+	 *
+	 * @return boolean
+	 */
+	public function getRemoveTrailing()
+	{
+		return $this->removeTrailing;
+	}
+
+	/**
 	 * Sets the current state of $removeLeading.
 	 *
 	 * @param boolean $removeLeading;
@@ -109,16 +119,6 @@ class Wipeup
 		$this->removeLeading = (boolean)$removeLeading;
 
 		return $this;
-	}
-
-	/**
-	 * Returns the current state of $removeTrailing.
-	 *
-	 * @return boolean
-	 */
-	public function getRemoveTrailing()
-	{
-		return $this->removeTrailing;
 	}
 
 	/**
