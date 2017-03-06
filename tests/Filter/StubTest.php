@@ -18,85 +18,46 @@ use PHPUnit\Framework\TestCase;
  * @since      Class available since Release 2.0.0
  */
 class StubTest 
-	extends TestCase
+	extends FilterTest
 {
 
 	/**
-	 * Holds the operation encoding.
+	 * Main set of tests
 	 *
-	 * This is the encoding that we do our work in.
-	 *
-	 * @var string
+	 * @var array[]
 	 */
-	protected $operationalEncoding = 'UTF-8';
+	protected $tests = [
+		[
+			'input' =>  'You Need!To"Do$Something*About:That:Line,.jpg',
+			'output' => 'You Need!To"Do$Something*About:That:Line,.jpg',
+		],
+
+		[
+			'input' =>  "there's<no>point?in@any`of|this.png",
+			'output' => "there's<no>point?in@any`of|this.png",
+		],
+
+		[
+			'input' =>  'you(should)not[have]come{here}like=this.xz',
+			'output' => 'you(should)not[have]come{here}like=this.xz',
+		],
+
+		[
+			'input' =>  'nothing#changes%here+and,I-do^not_care~',
+			'output' => 'nothing#changes%here+and,I-do^not_care~',
+		],
+
+		[
+			'input' =>  'what!do(you)want&why#have@you%come?.blah',
+			'output' => 'what!do(you)want&why#have@you%come?.blah',
+		],
+	];
 
 	/**
-	 * Holds the system internal encoding.
-	 *
-	 * This is the encoding that the system has defaulted to.
-	 *
-	 * @var string
+	 * The stub filter doesn't actually do anything, aside from call a method
+	 * it isn't supposed to.
 	 */
-	protected $systemInternalEncoding = null;
-
-	/**
-	 * Holds the system regex encoding.
-	 *
-	 * This is the regex encoding that the system has defaulted to.
-	 *
-	 * @var string
-	 */
-	protected $systemRegexEncoding = null;
-
-	/**
-	 * Prepares the MB function encodings for operation.
-	 */
-	protected function setUp()
-	{
-		if ($this->systemInternalEncoding !== null) {
-			return;
-		}
-
-		$this->systemInternalEncoding = mb_internal_encoding();
-		$this->systemRegexEncoding = mb_regex_encoding();
-
-		if ($this->systemInternalEncoding != $this->operationalEncoding) {
-			mb_internal_encoding($this->operationalEncoding);
-		}
-
-		if ($this->systemRegexEncoding != $this->operationalEncoding) {
-			mb_regex_encoding($this->operationalEncoding);
-		}
-
-	}
-
-	/**
-	 * Restores the MB function encodings after operation.
-	 */
-	protected function tearDown()
-	{
-		if ($this->systemInternalEncoding === null) {
-			return;
-		}
-
-		if ($this->systemInternalEncoding != $this->operationalEncoding) {
-			mb_internal_encoding($this->systemInternalEncoding);
-		}
-
-		if ($this->systemRegexEncoding != $this->operationalEncoding) {
-			mb_regex_encoding($this->systemRegexEncoding);
-		}
-
-		$this->systemInternalEncoding = null;
-		$this->systemRegexEncoding = null;
-
-	}
-
-	/**
-	 * Tests basic translation with a variety of encodings, adjusting the
-	 * system encoding every time.
-	 */
-	public function testSystemEncodings()
+	public function testDoubleResetEncoding()
 	{
 		$encodings = [ 'UTF-8', 'ISO-8859-1', 'ISO-8859-15' ];
 
@@ -106,40 +67,13 @@ class StubTest
 			DIRECTORY_SEPARATOR . 'spacey namey' . DIRECTORY_SEPARATOR,
 		];
 
-		$tests = [];
-
-		$tests[] = [
-			'input' =>  'You Need!To"Do$Something*About:That:Line;.jpg',
-			'output' => 'You Need!To"Do$Something*About:That:Line;.jpg',
-		];
-
-		$tests[] = [
-			'input' =>  "there's<no>point?in@any`of|this.png",
-			'output' => "there's<no>point?in@any`of|this.png",
-		];
-
-		$tests[] = [
-			'input' =>  'you(should)not[have]come{here}like=this.xz',
-			'output' => 'you(should)not[have]come{here}like=this.xz',
-		];
-
-		$tests[] = [
-			'input' =>  'nothing#changes%here+and,I-do^not_care~',
-			'output' => 'nothing#changes%here+and,I-do^not_care~',
-		];
-
-		$tests[] = [
-			'input' =>  'what!do(you)want&why#have@you%come?.blah',
-			'output' => 'what!do(you)want&why#have@you%come?.blah',
-		];
-
 		$filter = new StubFilter();
 
 		foreach ($encodings as $encoding) {
 			mb_internal_encoding($encoding);
 			mb_regex_encoding($encoding);
 
-			foreach ($tests as $test) {
+			foreach ($this->tests as $test) {
 				foreach ($paths as $path) {
 					$this->assertEquals(
 						$path . $test['output'],

@@ -22,6 +22,47 @@ class WipeupTest
 {
 
 	/**
+	 * Main set of tests
+	 *
+	 * @var array[]
+	 */
+	protected $tests = [
+
+		[
+			'input'        => 'this-----changes-----everything.jpg',
+			'output.rt.rl' => 'this-changes-everything.jpg',
+			'output.rt.xx' => 'this-changes-everything.jpg',
+			'output.xx.rl' => 'this-changes-everything.jpg',
+			'output.xx.xx' => 'this-changes-everything.jpg',
+		],
+
+		[
+			'input'        => "why___don't___you___shine.png",
+			'output.rt.rl' => "why_don't_you_shine.png",
+			'output.rt.xx' => "why_don't_you_shine.png",
+			'output.xx.rl' => "why_don't_you_shine.png",
+			'output.xx.xx' => "why_don't_you_shine.png",
+		],
+
+		[
+			'input'        => '_-_-_-_-a----s_____-p_-_-_---e---_----._n',
+			'output.rt.rl' => 'a-s-p-e.n',
+			'output.rt.xx' => '-a-s-p-e.n',
+			'output.xx.rl' => 'a-s-p-e-._n',
+			'output.xx.xx' => '-a-s-p-e-._n',
+		],
+
+		[
+			'input'        => '#8 - Number 5.ogg',
+			'output.rt.rl' => '8 - Number 5.ogg',
+			'output.rt.xx' => '#8 - Number 5.ogg',
+			'output.xx.rl' => '8 - Number 5.ogg',
+			'output.xx.xx' => '#8 - Number 5.ogg',
+		],
+
+	];
+
+	/**
 	 * Tests basic translation with a variety of encodings.
 	 */
 	public function testBasicTranslation()
@@ -34,49 +75,19 @@ class WipeupTest
 			DIRECTORY_SEPARATOR . 'spacey namey' . DIRECTORY_SEPARATOR,
 		];
 
-		$tests = [];
-
-		$tests[] = [
-			'input'        =>  'this-----changes-----everything.jpg',
-			'output.rt.rl' => 'this-changes-everything.jpg',
-			'output.rt.xx' => 'this-changes-everything.jpg',
-			'output.xx.rl' => 'this-changes-everything.jpg',
-			'output.xx.xx' => 'this-changes-everything.jpg',
-		];
-
-		$tests[] = [
-			'input'        =>  "why___don't___you___shine.png",
-			'output.rt.rl' => "why_don't_you_shine.png",
-			'output.rt.xx' => "why_don't_you_shine.png",
-			'output.xx.rl' => "why_don't_you_shine.png",
-			'output.xx.xx' => "why_don't_you_shine.png",
-		];
-
-		$tests[] = [
-			'input'        =>  '_-_-_-_-a----s_____-p_-_-_---e---_----._n',
-			'output.rt.rl' => 'a-s-p-e.n',
-			'output.rt.xx' => '-a-s-p-e.n',
-			'output.xx.rl' => 'a-s-p-e-._n',
-			'output.xx.xx' => '-a-s-p-e-._n',
-		];
-
-		$tests[] = [
-			'input'        => '#8 - Number 5.ogg',
-			'output.rt.rl' => '8 - Number 5.ogg',
-			'output.rt.xx' => '#8 - Number 5.ogg',
-			'output.xx.rl' => '8 - Number 5.ogg',
-			'output.xx.xx' => '#8 - Number 5.ogg',
-		];
-
 		$filter = new Wipeup();
 
-		foreach ($tests as $test) {
+		foreach ($this->tests as $test) {
 			foreach ($encodings as $encoding) {
 				foreach ($paths as $path) {
 					foreach (array(true, false) as $removeLeading) {
+						$filter->setRemoveLeading($removeLeading);
+
 						foreach (array(true, false) as $removeTrailing) {
-							$filter->setRemoveLeading($removeLeading);
 							$filter->setRemoveTrailing($removeTrailing);
+
+							$this->assertEquals($removeLeading, $filter->getRemoveLeading());
+							$this->assertEquals($removeTrailing, $filter->getRemoveTrailing());
 
 							$expectedLabel = 'output.' . 
 								($removeTrailing ? 'rt' : 'xx') . '.' .
@@ -109,49 +120,19 @@ class WipeupTest
 			DIRECTORY_SEPARATOR . 'spacey namey' . DIRECTORY_SEPARATOR,
 		];
 
-		$tests = [];
-
-		$tests[] = [
-			'input' =>  'this-----changes-----everything.jpg',
-			'output.rt.rl' => 'this-changes-everything.jpg',
-			'output.rt.xx' => 'this-changes-everything.jpg',
-			'output.xx.rl' => 'this-changes-everything.jpg',
-			'output.xx.xx' => 'this-changes-everything.jpg',
-		];
-
-		$tests[] = [
-			'input' =>  "why___don't___you___shine.png",
-			'output.rt.rl' => "why_don't_you_shine.png",
-			'output.rt.xx' => "why_don't_you_shine.png",
-			'output.xx.rl' => "why_don't_you_shine.png",
-			'output.xx.xx' => "why_don't_you_shine.png",
-		];
-
-		$tests[] = [
-			'input' =>  '_-_-_-_-a----s_____-p_-_-_---e---_----._n',
-			'output.rt.rl' => 'a-s-p-e.n',
-			'output.rt.xx' => '-a-s-p-e.n',
-			'output.xx.rl' => 'a-s-p-e-._n',
-			'output.xx.xx' => '-a-s-p-e-._n',
-		];
-
-		$tests[] = [
-			'input'        => '#8 - Number 5.ogg',
-			'output.rt.rl' => '8 - Number 5.ogg',
-			'output.rt.xx' => '#8 - Number 5.ogg',
-			'output.xx.rl' => '8 - Number 5.ogg',
-			'output.xx.xx' => '#8 - Number 5.ogg',
-		];
-
 		$filter = new Wipeup();
 
-		foreach ($tests as $test) {
+		foreach ($this->tests as $test) {
 			foreach ($encodings as $encoding) {
 				foreach ($paths as $path) {
 					foreach (array(true, false) as $removeLeading) {
+						$filter->setRemoveLeading($removeLeading);
+
 						foreach (array(true, false) as $removeTrailing) {
-							$filter->setRemoveLeading($removeLeading);
 							$filter->setRemoveTrailing($removeTrailing);
+
+							$this->assertEquals($removeLeading, $filter->getRemoveLeading());
+							$this->assertEquals($removeTrailing, $filter->getRemoveTrailing());
 
 							$expectedLabel = 'output.' . 
 								($removeTrailing ? 'rt' : 'xx') . '.' .

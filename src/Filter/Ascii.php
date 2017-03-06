@@ -32,6 +32,16 @@ class Ascii
 	protected $convertByCharacter = false;
 
 	/**
+	 * Whether or not we should transliterate characters.
+	 *
+	 * Disabling this means that any character above 0x7F in US-ASCII will
+	 * become '_';
+	 *
+	 * @var boolean
+	 */
+	protected $transliteration = true;
+
+	/**
 	 * Filters a filename based on the rules of the filter.
 	 *
 	 * It's important to note that this only operates on the filename; any
@@ -85,6 +95,26 @@ class Ascii
 	}
 
 	/**
+	 * Returns the target encoding.
+	 *
+	 * @return string
+	 */
+	protected function getTargetEncoding()
+	{
+		return $this->transliteration ? 'ASCII//TRANSLIT' : 'ASCII';
+	}
+
+	/**
+	 * Returns the current state of $transliteration.
+	 *
+	 * @return boolean
+	 */
+	public function getTransliteration()
+	{
+		return $this->transliteration;
+	}
+
+	/**
 	 * Sets the current state of $convertByCharacter.
 	 *
 	 * @param boolean $convertByCharacter;
@@ -99,7 +129,21 @@ class Ascii
 	}
 
 	/**
-	 * Quick and dirty: try iconv with //TRANSLIT.
+	 * Sets the current state of $transliteration.
+	 *
+	 * @param boolean $transliteration;
+	 *
+	 * @return $this Support method chaining.
+	 */
+	public function setTransliteration($transliteration)
+	{
+		$this->transliteration = (boolean)$transliteration;
+
+		return $this;
+	}
+
+	/**
+	 * Quick and dirty: try iconv on the whole string.
 	 *
 	 * @param string $filename 
 	 *
@@ -107,7 +151,9 @@ class Ascii
 	 */
 	protected function convertString($filename)
 	{
-		$check = @iconv('UTF-8', 'ASCII//TRANSLIT', $filename);
+		$check = @iconv($this->operationalEncoding, $this->getTargetEncoding(),
+			$filename);
+
 		if ($check === false) {
 			$error = error_get_last();
 			throw new Exception($error['message']);
@@ -124,9 +170,11 @@ class Ascii
 	 */
 	protected function convertStringByCharacter($filename)
 	{
+		$targetEncoding = $this->getTargetEncoding();
+
 		$output = '';
 		for ($i = 0; $i < mb_strlen($filename); $i++) {
-			$check = @iconv('UTF-8', 'ASCII//TRANSLIT',
+			$check = @iconv($this->operationalEncoding, $targetEncoding,
 				mb_substr($filename, $i, 1));
 
 			if ($check !== false) {
