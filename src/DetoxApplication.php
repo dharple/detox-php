@@ -34,7 +34,9 @@ class DetoxApplication extends Application
 		OutputInterface $output)
     {
 		parent::configureIO($input, $output);
-		$output->setDecorated(false);
+
+		$output->setDecorated(
+			$input->hasParameterOption(array('--color'), true));
 	}
 
     /**

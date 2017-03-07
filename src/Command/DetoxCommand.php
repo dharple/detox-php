@@ -41,6 +41,9 @@ class DetoxCommand extends Command
 					new InputOption('ascii', null, InputOption::VALUE_NONE,
 						'tranlisterate or remove all non-ASCII characters'),
 
+					new InputOption('--color', '', InputOption::VALUE_NONE,
+						'enable colors'),
+
 					new InputOption('dry-run', 'n', InputOption::VALUE_NONE,
 						'do a dry run (don\'t actually do anything)'),
 
@@ -81,6 +84,12 @@ class DetoxCommand extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$io = new SymfonyStyle($input, $output);
+
+		if (count($input->getArgument('path')) == 0) {
+			$io->error('please specify at least one file or path to operate upon');
+			$io->text($this->getSynopsis());
+			return;
+		}
 
 		$io->text('files and directories to parse:');
 		$io->listing($input->getArgument('path'));
