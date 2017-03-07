@@ -37,6 +37,11 @@ easier to maintain.
 ## The config files
 - Seriously.  Everything should be done from the command line.
 
+# Notes
+
+The PHP minimum version, 5.5.9, is imposed by the Symphony console library that
+I'm using.  The filters themselves passed on 5.4.x under TravisCI.
+
 # Contact
 
 Doug Harple <detox.dharple@gmail.com>

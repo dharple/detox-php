@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Provides the base detox command.
@@ -34,8 +35,8 @@ class DetoxCommand extends Command
 			->setName('detox')
 			->setDefinition(
 				new InputDefinition(array(
-					new InputArgument('file', InputArgument::IS_ARRAY,
-						'The files to operate on'),
+					new InputArgument('path', InputArgument::IS_ARRAY,
+						'the files or directories to operate on'),
 
 					new InputOption('ascii', null, InputOption::VALUE_NONE,
 						'tranlisterate or remove all non-ASCII characters'),
@@ -79,36 +80,28 @@ class DetoxCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$output->writeln('files to parse:');
-		$output->writeln($input->getArgument('file'));
-		$output->writeln('');
+		$io = new SymfonyStyle($input, $output);
 
-		$output->writeln('ascii filter ' .
-			($input->getOption('ascii') ? 'enabled' : 'disabled'));
+		$io->text('files and directories to parse:');
+		$io->listing($input->getArgument('path'));
 
-		$output->writeln('dry run ' . 
-			($input->getOption('dry-run') ? 'enabled' : 'disabled'));
+		$io->table(
+			array('feature', 'selected'),
+			array(
+				array('ascii filter', $input->getOption('ascii') ? 'y' : 'n'),
+				array('dry run', $input->getOption('dry-run') ? 'y' : 'n'),
+				array('inline mode', $input->getOption('inline') ? 'y' : 'n'),
+				array('lower filter', $input->getOption('lower') ? 'y' : 'n'),
+				array('recursive mode', $input->getOption('recursive') ? 'y' : 'n'),
+				array('safe filter', $input->getOption('safe') ? 'y' : 'n'),
+				array('special file mode', $input->getOption('special') ? 'y' : 'n'),
+				array('uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'),
+				array('verbose mode', $input->getOption('verbose') ? 'y' : 'n'),
+			)
+		);
 
-		$output->writeln('inline mode ' . 
-			($input->getOption('inline') ? 'enabled' : 'disabled'));
-
-		$output->writeln('lower filter ' . 
-			($input->getOption('lower') ? 'enabled' : 'disabled'));
-
-		$output->writeln('recursive mode ' . 
-			($input->getOption('recursive') ? 'enabled' : 'disabled'));
-
-		$output->writeln('safe filter ' . 
-			($input->getOption('safe') ? 'enabled' : 'disabled'));
-
-		$output->writeln('special file mode ' . 
-			($input->getOption('special') ? 'enabled' : 'disabled'));
-
-		$output->writeln('uncgi filter ' . 
-			($input->getOption('uncgi') ? 'enabled' : 'disabled'));
-
-		$output->writeln('verbose mode ' . 
-			($input->getOption('verbose') ? 'enabled' : 'disabled'));
 	}
 
 }
+
+// vim:ai:cin:noet:ts=4:sw=4:fo+=or
