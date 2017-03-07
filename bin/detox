@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Detox (https://github.com/dharple/detox/)
+ *
+ * @link      https://github.com/dharple/detox/
+ * @copyright Copyright (c) 2017 Doug Harple
+ * @license   https://github.com/dharple/detox/blob/master/LICENSE
+ */
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Detox\DetoxApplication;
+use Detox\Command\DetoxCommand;
+
+$application = new DetoxApplication('detox', '0.1.0');
+$command = new DetoxCommand();
+
+$application->add($command);
+
+$application->setDefaultCommand($command->getName(), true);
+$application->run();
+

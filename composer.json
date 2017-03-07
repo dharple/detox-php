@@ -3,7 +3,8 @@
     "description": "Library and binary for translating problematic filenames into tame ones.",
     "type": "library",
     "require": {
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "symfony/console": "^3.2"
     },
     "require-dev": {
         "phpunit/php-code-coverage": "*",
