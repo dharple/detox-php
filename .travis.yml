@@ -7,8 +7,7 @@ php:
   - hhvm
   - nightly
 
-before_script:
-  - phpenv config-rm xdebug.ini
+install:
   - travis_retry composer install --no-interaction
   - iconv -V
 
