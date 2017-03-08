@@ -15,7 +15,7 @@ namespace Detox\Filter;
  *
  * Replaces the following characters with _
  *
- *   SPACE, !, #, ", $, ', *, /, :, ;, <, >, ?, @, \, `, |
+ *   SPACE, TAB, !, #, ", $, ', *, /, :, ;, <, >, ?, @, \, `, |
  *
  * (Note that depending on your OS, / or \ will be used for directory
  * separation, and will (hopefully) not be available for filenames.)
@@ -56,7 +56,7 @@ class Safe
 
 		$baseFilename = $this->getBaseFilename($filename);
 
-		$baseFilename = mb_ereg_replace('[ !"$\'*\/:;<>?@\\`|]', '_', $baseFilename);
+		$baseFilename = mb_ereg_replace('[ 	!"$\'*\/:;<>?@\\`|]', '_', $baseFilename);
 
 		$baseFilename = mb_ereg_replace('[()\[\]{}=]', '-', $baseFilename);
 

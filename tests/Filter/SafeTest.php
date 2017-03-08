@@ -53,6 +53,11 @@ class SafeTest
 			'output' => 'what_do-you-want_and_why#have_you%come_.blah',
 		],
 
+		[
+			'input' =>  "tabs\tbreak\tdetox.php",
+			'output' => "tabs_break_detox.php",
+		],
+
 	];
 
 	/**

@@ -19,11 +19,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Provides the base detox command.
+ * Provides the base inline-detox command.
  *
  * @since      Class available since Release 2.0.0
  */
-class DetoxCommand extends Command
+class InlineDetoxCommand extends Command
 {
 
 	/**
@@ -32,11 +32,11 @@ class DetoxCommand extends Command
 	protected function configure()
 	{
 		$this
-			->setName('detox')
+			->setName('inline-detox')
 			->setDefinition(
 				new InputDefinition(array(
-					new InputArgument('path', InputArgument::IS_ARRAY,
-						'the files or directories to operate on'),
+					new InputArgument('file', InputArgument::IS_ARRAY,
+						'the files to operate on'),
 
 					new InputOption('ascii', null, InputOption::VALUE_NONE,
 						'tranlisterate or remove all non-ASCII characters'),
@@ -44,26 +44,14 @@ class DetoxCommand extends Command
 					new InputOption('color', '', InputOption::VALUE_NONE,
 						'enable colors'),
 
-					new InputOption('dry-run', 'n', InputOption::VALUE_NONE,
-						'do a dry run (don\'t actually do anything)'),
-
 					new InputOption('help', 'h', InputOption::VALUE_NONE,
 						'this message'),
-
-					new InputOption('inline', null, InputOption::VALUE_NONE,
-						'run inline mode'),
 
 					new InputOption('lower', null, InputOption::VALUE_NONE,
 						'convert filenames to lower case'),
 
-					new InputOption('recursive', 'r', InputOption::VALUE_NONE,
-						'be recursive'),
-
 					new InputOption('safe', null, InputOption::VALUE_NONE,
 						'convert filenames to command-line safe filenames'),
-
-					new InputOption('special', null, InputOption::VALUE_NONE,
-						'work on links and special files'),
 
 					new InputOption('uncgi', null, InputOption::VALUE_NONE,
 						'decode CGI-encoded characters in the filename'),
@@ -85,19 +73,15 @@ class DetoxCommand extends Command
 	{
 		$io = new SymfonyStyle($input, $output->getErrorOutput());
 
-		$io->text('files and directories to parse:');
-		$io->listing($input->getArgument('path'));
+		$io->text('files to parse:');
+		$io->listing($input->getArgument('file'));
 
 		$io->table(
 			array('feature', 'selected'),
 			array(
 				array('ascii filter', $input->getOption('ascii') ? 'y' : 'n'),
-				array('dry run', $input->getOption('dry-run') ? 'y' : 'n'),
-				array('inline mode', $input->getOption('inline') ? 'y' : 'n'),
 				array('lower filter', $input->getOption('lower') ? 'y' : 'n'),
-				array('recursive mode', $input->getOption('recursive') ? 'y' : 'n'),
 				array('safe filter', $input->getOption('safe') ? 'y' : 'n'),
-				array('special file mode', $input->getOption('special') ? 'y' : 'n'),
 				array('uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'),
 				array('verbose mode', $input->getOption('verbose') ? 'y' : 'n'),
 			)
@@ -105,7 +89,7 @@ class DetoxCommand extends Command
 	}
 
 	/**
-	 * Runs detox
+	 * Runs inline-detox
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
@@ -115,10 +99,11 @@ class DetoxCommand extends Command
 
 		$io = new SymfonyStyle($input, $output);
 
-		if (count($input->getArgument('path')) == 0) {
-			$io->error('please specify at least one file or path to operate upon');
-			$io->text($this->getSynopsis());
-			return;
+		$safeFilter = new \Detox\Filter\Safe();
+		$wipeupFilter = new \Detox\Filter\Wipeup();
+
+		while($line = fgets(STDIN, PHP_MAXPATHLEN + 2)) {
+			print($wipeupFilter->filter($safeFilter->filter($line)));
 		}
 
 	}
