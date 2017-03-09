@@ -10,11 +10,11 @@
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-use Detox\DetoxApplication;
+use Detox\Application;
 use Detox\Command\DetoxCommand;
 
 try {
-	$application = new DetoxApplication('detox', '0.1.0');
+	$application = new Application('detox', '0.1.0');
 	$application->setCatchExceptions(false);
 	$command = new DetoxCommand();
 	$application->add($command);

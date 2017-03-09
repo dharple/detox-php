@@ -8,15 +8,14 @@
  * @since     File available since Release 2.0.0
  */
 
-namespace Detox\Filter;
+namespace Detox\Helper;
 
 /**
  * Provides core functionality for the filters.
  *
  * @since      Class available since Release 2.0.0
  */
-abstract class AbstractFilter
-	implements FilterInterface
+trait Encoding
 {
 
 	/**

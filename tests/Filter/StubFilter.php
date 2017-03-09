@@ -10,7 +10,7 @@
 
 namespace DetoxTest\Filter;
 
-use Detox\Filter\AbstractFilter;
+use Detox\Helper\Encoding;
 use Detox\Filter\FilterInterface;
 
 /**
@@ -19,9 +19,9 @@ use Detox\Filter\FilterInterface;
  * @since      Class available since Release 2.0.0
  */
 class StubFilter
-	extends AbstractFilter
 	implements FilterInterface
 {
+	use Encoding;
 
 	/**
 	 * Filters a filename based on the rules of the filter.

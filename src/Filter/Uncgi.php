@@ -10,6 +10,8 @@
 
 namespace Detox\Filter;
 
+use Detox\Helper\Encoding;
+
 /**
  * Replaces any % followed by two hex characters with the appropriate UTF-8
  * character.
@@ -19,9 +21,9 @@ namespace Detox\Filter;
  * @since      Class available since Release 2.0.0
  */
 class Uncgi
-	extends AbstractFilter
 	implements FilterInterface
 {
+	use Encoding;
 
 	/**
 	 * Filters a filename based on the rules of the filter.
@@ -43,6 +45,7 @@ class Uncgi
 		$baseFilename = $this->getBaseFilename($filename);
 
 		if (mb_strstr($baseFilename, '%') !== false || mb_strstr($baseFilename, '+') !== false) {
+			$baseFilename = mb_eregi_replace('%(2F|00)', '_', $baseFilename);
 			$baseFilename = urldecode($baseFilename);
 		}
 

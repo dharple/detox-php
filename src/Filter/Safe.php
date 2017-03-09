@@ -10,6 +10,8 @@
 
 namespace Detox\Filter;
 
+use Detox\Helper\Encoding;
+
 /**
  * Replaces particularly troublesome characters in a filename.
  *
@@ -33,9 +35,9 @@ namespace Detox\Filter;
  * @since      Class available since Release 2.0.0
  */
 class Safe
-	extends AbstractFilter
 	implements FilterInterface
 {
+	use Encoding;
 
 	/**
 	 * Filters a filename based on the rules of the filter.
@@ -56,7 +58,9 @@ class Safe
 
 		$baseFilename = $this->getBaseFilename($filename);
 
-		$baseFilename = mb_ereg_replace('[ 	!"$\'*\/:;<>?@\\`|]', '_', $baseFilename);
+		$baseFilename = str_replace('\\', '_', $baseFilename);
+
+		$baseFilename = mb_ereg_replace('[ 	!"$\'*/:;<>?@`|]', '_', $baseFilename);
 
 		$baseFilename = mb_ereg_replace('[()\[\]{}=]', '-', $baseFilename);
 

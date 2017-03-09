@@ -10,6 +10,8 @@
 
 namespace Detox\Filter;
 
+use Detox\Helper\Encoding;
+
 /**
  * Replaces redundant characters inside of a filename.
  *
@@ -25,9 +27,9 @@ namespace Detox\Filter;
  * @since      Class available since Release 2.0.0
  */
 class Wipeup
-	extends AbstractFilter
 	implements FilterInterface
 {
+	use Encoding;
 
 	/**
 	 * Whether or not to remove any "-", "_", or "#" that are sitting at the
@@ -72,6 +74,7 @@ class Wipeup
 
 		if ($this->removeTrailing) {
 			$baseFilename = mb_ereg_replace('[_-]?\.[_-]?', '.', $baseFilename);
+			$baseFilename = mb_ereg_replace('[_-]+$', '', $baseFilename);
 		}
 
 		if ($this->removeLeading) {

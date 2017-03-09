@@ -10,6 +10,8 @@
 
 namespace Detox\Filter;
 
+use Detox\Helper\Encoding;
+
 /**
  * Transliterates any characters into ASCII.
  *
@@ -20,9 +22,9 @@ namespace Detox\Filter;
  * @since      Class available since Release 2.0.0
  */
 class Ascii
-	extends AbstractFilter
 	implements FilterInterface
 {
+	use Encoding;
 
 	/**
 	 * Whether or not we should always operate character by character.

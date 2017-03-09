@@ -60,6 +60,14 @@ class WipeupTest
 			'output.xx.xx' => '#8 - Number 5.ogg',
 		],
 
+		[
+			'input'        => '_simple_',
+			'output.rt.rl' => 'simple',
+			'output.rt.xx' => '_simple',
+			'output.xx.rl' => 'simple_',
+			'output.xx.xx' => '_simple_',
+		],
+
 	];
 
 	/**

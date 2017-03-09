@@ -10,15 +10,17 @@
 
 namespace Detox\Filter;
 
+use Detox\Helper\Encoding;
+
 /**
  * Forces all characters to lower case.
  *
  * @since      Class available since Release 2.0.0
  */
 class Lower
-	extends AbstractFilter
 	implements FilterInterface
 {
+	use Encoding;
 
 	/**
 	 * Filters a filename based on the rules of the filter.

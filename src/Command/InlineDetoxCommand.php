@@ -60,7 +60,10 @@ class InlineDetoxCommand extends Command
 						'be verbose'),
 
 					new InputOption('version', 'V', InputOption::VALUE_NONE,
-						'show the current version')
+						'show the current version'),
+
+					new InputOption('wipeup', null, InputOption::VALUE_NONE,
+						'remove duplicate - and _ characters'),
 
 				))
 			);
@@ -84,6 +87,7 @@ class InlineDetoxCommand extends Command
 				array('safe filter', $input->getOption('safe') ? 'y' : 'n'),
 				array('uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'),
 				array('verbose mode', $input->getOption('verbose') ? 'y' : 'n'),
+				array('wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'),
 			)
 		);
 	}
@@ -99,11 +103,30 @@ class InlineDetoxCommand extends Command
 
 		$io = new SymfonyStyle($input, $output);
 
-		$safeFilter = new \Detox\Filter\Safe();
-		$wipeupFilter = new \Detox\Filter\Wipeup();
+		$sequence = new \Detox\Sequence();
+
+		if ($input->getOption('uncgi')) {
+			$sequence->addFilter(new \Detox\Filter\Uncgi());
+		}
+
+		if ($input->getOption('ascii')) {
+			$sequence->addFilter(new \Detox\Filter\Ascii());
+		}
+
+		if ($input->getOption('lower')) {
+			$sequence->addFilter(new \Detox\Filter\Lower());
+		}
+
+		if ($input->getOption('safe')) {
+			$sequence->addFilter(new \Detox\Filter\Safe());
+		}
+
+		if ($input->getOption('wipeup')) {
+			$sequence->addFilter(new \Detox\Filter\Wipeup());
+		}
 
 		while($line = fgets(STDIN, PHP_MAXPATHLEN + 2)) {
-			print($wipeupFilter->filter($safeFilter->filter($line)));
+			print($sequence->filter($line));
 		}
 
 	}

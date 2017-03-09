@@ -72,8 +72,10 @@ class DetoxCommand extends Command
 						'be verbose'),
 
 					new InputOption('version', 'V', InputOption::VALUE_NONE,
-						'show the current version')
+						'show the current version'),
 
+					new InputOption('wipeup', null, InputOption::VALUE_NONE,
+						'remove duplicate - and _ characters'),
 				))
 			);
 	}
@@ -100,6 +102,7 @@ class DetoxCommand extends Command
 				array('special file mode', $input->getOption('special') ? 'y' : 'n'),
 				array('uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'),
 				array('verbose mode', $input->getOption('verbose') ? 'y' : 'n'),
+				array('wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'),
 			)
 		);
 	}

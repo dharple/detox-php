@@ -58,6 +58,12 @@ class SafeTest
 			'output' => "tabs_break_detox.php",
 		],
 
+		[
+			'input' =>  "slashes\\here",
+			'output' => "slashes_here",
+		],
+
+
 	];
 
 	/**

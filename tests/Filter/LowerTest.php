@@ -13,7 +13,7 @@ namespace DetoxTest\Filter;
 use Detox\Filter\Lower;
 
 /**
- * Tests the safe filter.
+ * Tests the lowercase filter.
  *
  * @since      Class available since Release 2.0.0
  */

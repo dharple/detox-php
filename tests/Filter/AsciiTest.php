@@ -13,7 +13,7 @@ namespace DetoxTest\Filter;
 use Detox\Filter\Ascii;
 
 /**
- * Tests the safe filter.
+ * Tests the ASCII filter.
  *
  * @since      Class available since Release 2.0.0
  */
