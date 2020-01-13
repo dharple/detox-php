@@ -110,7 +110,7 @@ class DetoxCommand extends Command
 	/**
 	 * Runs detox
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
 			$this->debugOptions($input, $output);
@@ -121,9 +121,10 @@ class DetoxCommand extends Command
 		if (count($input->getArgument('path')) == 0) {
 			$io->error('please specify at least one file or path to operate upon');
 			$io->text($this->getSynopsis());
-			return;
+			return 1;
 		}
 
+        return 0;
 	}
 
 }

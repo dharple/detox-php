@@ -95,7 +95,7 @@ class InlineDetoxCommand extends Command
 	/**
 	 * Runs inline-detox
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
 			$this->debugOptions($input, $output);
@@ -129,6 +129,7 @@ class InlineDetoxCommand extends Command
 			print($sequence->filter($line));
 		}
 
+        return 0;
 	}
 
 }

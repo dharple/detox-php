@@ -51,7 +51,7 @@ abstract class FilterTest
 	/**
 	 * Prepares the MB function encodings for operation.
 	 */
-	protected function setUp()
+    protected function setUp(): void
 	{
 		if ($this->systemInternalEncoding !== null) {
 			return;
@@ -73,7 +73,7 @@ abstract class FilterTest
 	/**
 	 * Restores the MB function encodings after operation.
 	 */
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		if ($this->systemInternalEncoding === null) {
 			return;

@@ -3,13 +3,9 @@
     "description": "Library and binary for translating problematic filenames into tame ones.",
     "type": "library",
     "require": {
+        "php": "^7.2",
         "ext-mbstring": "*",
-        "php": ">=5.5.9",
-        "symfony/console": "^3.2"
-    },
-    "require-dev": {
-        "phpunit/php-code-coverage": "*",
-        "phpunit/phpunit": "^6.0 || ^5.7 || ^4.8"
+        "symfony/console": "^5.0"
     },
     "license": "BSD-2-Clause",
     "authors": [
@@ -31,5 +27,12 @@
         "psr-4": {
             "DetoxTest\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "require-dev": {
+        "phpunit/php-code-coverage": "^7.0",
+        "phpunit/phpunit": "^8.5"
     }
 }

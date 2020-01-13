@@ -1,4 +1,5 @@
-/vendor/
-/coverage/
-scrap.php
 composer.lock
+/coverage/
+.phpunit.result.cache
+scrap.php
+/vendor/
