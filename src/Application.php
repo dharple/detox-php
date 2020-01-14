@@ -37,7 +37,7 @@ class Application extends \Symfony\Component\Console\Application
         parent::configureIO($input, $output);
 
         $output->setDecorated(
-            $input->hasParameterOption(array('--color'), true)
+            $input->hasParameterOption(['--color'], true)
         );
     }
 

@@ -8,6 +8,7 @@
         "symfony/console": "^5.0"
     },
     "require-dev": {
+        "dharple/outsanity-phpcs": "^0.1.0",
         "phpunit/php-code-coverage": "^7.0",
         "phpunit/phpunit": "^8.5",
         "squizlabs/php_codesniffer": "^3.5"

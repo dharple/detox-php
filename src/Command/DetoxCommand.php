@@ -35,7 +35,7 @@ class DetoxCommand extends Command
         $this
             ->setName('detox')
             ->setDefinition(
-                new InputDefinition(array(
+                new InputDefinition([
                     new InputArgument(
                         'path',
                         InputArgument::IS_ARRAY,
@@ -132,7 +132,7 @@ class DetoxCommand extends Command
                         InputOption::VALUE_NONE,
                         'remove duplicate - and _ characters'
                     ),
-                ))
+                ])
             );
     }
 
@@ -147,19 +147,19 @@ class DetoxCommand extends Command
         $io->listing($input->getArgument('path'));
 
         $io->table(
-            array('feature', 'selected'),
-            array(
-                array('ascii filter', $input->getOption('ascii') ? 'y' : 'n'),
-                array('dry run', $input->getOption('dry-run') ? 'y' : 'n'),
-                array('inline mode', $input->getOption('inline') ? 'y' : 'n'),
-                array('lower filter', $input->getOption('lower') ? 'y' : 'n'),
-                array('recursive mode', $input->getOption('recursive') ? 'y' : 'n'),
-                array('safe filter', $input->getOption('safe') ? 'y' : 'n'),
-                array('special file mode', $input->getOption('special') ? 'y' : 'n'),
-                array('uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'),
-                array('verbose mode', $input->getOption('verbose') ? 'y' : 'n'),
-                array('wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'),
-            )
+            ['feature', 'selected'],
+            [
+                ['ascii filter', $input->getOption('ascii') ? 'y' : 'n'],
+                ['dry run', $input->getOption('dry-run') ? 'y' : 'n'],
+                ['inline mode', $input->getOption('inline') ? 'y' : 'n'],
+                ['lower filter', $input->getOption('lower') ? 'y' : 'n'],
+                ['recursive mode', $input->getOption('recursive') ? 'y' : 'n'],
+                ['safe filter', $input->getOption('safe') ? 'y' : 'n'],
+                ['special file mode', $input->getOption('special') ? 'y' : 'n'],
+                ['uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'],
+                ['verbose mode', $input->getOption('verbose') ? 'y' : 'n'],
+                ['wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'],
+            ]
         );
     }
 

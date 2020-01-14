@@ -35,7 +35,7 @@ class InlineDetoxCommand extends Command
         $this
             ->setName('inline-detox')
             ->setDefinition(
-                new InputDefinition(array(
+                new InputDefinition([
                     new InputArgument(
                         'file',
                         InputArgument::IS_ARRAY,
@@ -105,7 +105,7 @@ class InlineDetoxCommand extends Command
                         'remove duplicate - and _ characters'
                     ),
 
-                ))
+                ])
             );
     }
 
@@ -120,15 +120,15 @@ class InlineDetoxCommand extends Command
         $io->listing($input->getArgument('file'));
 
         $io->table(
-            array('feature', 'selected'),
-            array(
-                array('ascii filter', $input->getOption('ascii') ? 'y' : 'n'),
-                array('lower filter', $input->getOption('lower') ? 'y' : 'n'),
-                array('safe filter', $input->getOption('safe') ? 'y' : 'n'),
-                array('uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'),
-                array('verbose mode', $input->getOption('verbose') ? 'y' : 'n'),
-                array('wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'),
-            )
+            ['feature', 'selected'],
+            [
+                ['ascii filter', $input->getOption('ascii') ? 'y' : 'n'],
+                ['lower filter', $input->getOption('lower') ? 'y' : 'n'],
+                ['safe filter', $input->getOption('safe') ? 'y' : 'n'],
+                ['uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'],
+                ['verbose mode', $input->getOption('verbose') ? 'y' : 'n'],
+                ['wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'],
+            ]
         );
     }
 
