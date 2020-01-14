@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Detox (https://github.com/dharple/detox/)
+ * This file is part of the Detox package.
  *
- * @link      https://github.com/dharple/detox/
- * @copyright Copyright (c) 2017 Doug Harple
- * @license   https://github.com/dharple/detox/blob/master/LICENSE
- * @since     File available since Release 2.0.0
+ * (c) Doug Harple <detox.dharple@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Detox;
@@ -19,8 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Overrides a few methods on the default Symfony application.
- *
- * @since      Class available since Release 2.0.0
  */
 class Application extends BaseApplication
 {
