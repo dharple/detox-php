@@ -125,7 +125,7 @@ class Ascii implements FilterInterface
      */
     public function setConvertByCharacter($convertByCharacter)
     {
-        $this->convertByCharacter = (bool)$convertByCharacter;
+        $this->convertByCharacter = (bool) $convertByCharacter;
 
         return $this;
     }
@@ -139,7 +139,7 @@ class Ascii implements FilterInterface
      */
     public function setTransliteration($transliteration)
     {
-        $this->transliteration = (bool)$transliteration;
+        $this->transliteration = (bool) $transliteration;
 
         return $this;
     }

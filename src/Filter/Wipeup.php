@@ -119,7 +119,7 @@ class Wipeup implements FilterInterface
      */
     public function setRemoveLeading($removeLeading)
     {
-        $this->removeLeading = (bool)$removeLeading;
+        $this->removeLeading = (bool) $removeLeading;
 
         return $this;
     }
@@ -133,7 +133,7 @@ class Wipeup implements FilterInterface
      */
     public function setRemoveTrailing($removeTrailing)
     {
-        $this->removeTrailing = (bool)$removeTrailing;
+        $this->removeTrailing = (bool) $removeTrailing;
 
         return $this;
     }
