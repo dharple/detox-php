@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Detox (https://github.com/dharple/detox/)
  *
@@ -18,17 +19,16 @@ namespace Detox\Filter;
 interface FilterInterface
 {
 
-	/**
-	 * Filters a filename based on the rules of the filter.
-	 *
-	 * It's important to note that this only operates on the filename; any
-	 * additional path information will be returned as passed.
-	 *
-	 * @param string $filename The filename to filter.
-	 * @param string $encoding The encoding that the filename is in.
-	 *
-	 * @return string The filtered filename.
-	 */
-	public function filter($filename, $encoding = null);
-
+    /**
+     * Filters a filename based on the rules of the filter.
+     *
+     * It's important to note that this only operates on the filename; any
+     * additional path information will be returned as passed.
+     *
+     * @param string $filename The filename to filter.
+     * @param string $encoding The encoding that the filename is in.
+     *
+     * @return string The filtered filename.
+     */
+    public function filter($filename, $encoding = null);
 }

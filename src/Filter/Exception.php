@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Detox (https://github.com/dharple/detox/)
  *
@@ -15,8 +16,7 @@ namespace Detox\Filter;
  *
  * @since      Class available since Release 2.0.0
  */
-class Exception
-	extends \Exception
+class Exception extends \Exception
 {
 
 }

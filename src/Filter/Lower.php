@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Detox (https://github.com/dharple/detox/)
  *
@@ -17,39 +18,37 @@ use Detox\Helper\Encoding;
  *
  * @since      Class available since Release 2.0.0
  */
-class Lower
-	implements FilterInterface
+class Lower implements FilterInterface
 {
-	use Encoding;
+    use Encoding;
 
-	/**
-	 * Filters a filename based on the rules of the filter.
-	 *
-	 * It's important to note that this only operates on the filename; any
-	 * additional path information will be returned as passed.
-	 *
-	 * @param string $filename The filename to filter.
-	 * @param string $encoding The encoding that the filename is in.
-	 *
-	 * @return string The filtered filename.
-	 */
-	public function filter($filename, $encoding = null)
-	{
-		$this->prepareEncodings();
+    /**
+     * Filters a filename based on the rules of the filter.
+     *
+     * It's important to note that this only operates on the filename; any
+     * additional path information will be returned as passed.
+     *
+     * @param string $filename The filename to filter.
+     * @param string $encoding The encoding that the filename is in.
+     *
+     * @return string The filtered filename.
+     */
+    public function filter($filename, $encoding = null)
+    {
+        $this->prepareEncodings();
 
-		$filename = $this->convertToOperationalEncoding($filename, $encoding);
+        $filename = $this->convertToOperationalEncoding($filename, $encoding);
 
-		$baseFilename = $this->getBaseFilename($filename);
+        $baseFilename = $this->getBaseFilename($filename);
 
-		$baseFilename = mb_strtolower($baseFilename);
+        $baseFilename = mb_strtolower($baseFilename);
 
-		$filename = $this->replaceBaseFilename($filename, $baseFilename);
+        $filename = $this->replaceBaseFilename($filename, $baseFilename);
 
-		$filename = $this->convertFromOperationalEncoding($filename, $encoding);
+        $filename = $this->convertFromOperationalEncoding($filename, $encoding);
 
-		$this->restoreEncodings();
+        $this->restoreEncodings();
 
-		return $filename;
-	}
-
+        return $filename;
+    }
 }

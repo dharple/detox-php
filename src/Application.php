@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Detox (https://github.com/dharple/detox/)
  *
@@ -20,24 +21,25 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @since      Class available since Release 2.0.0
  */
-class Application
-	extends \Symfony\Component\Console\Application
+class Application extends \Symfony\Component\Console\Application
 {
 
     /**
-	 * Forces the application to non-ANSI only.
+     * Forces the application to non-ANSI only.
      *
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
-    protected function configureIO(InputInterface $input,
-		OutputInterface $output)
-    {
-		parent::configureIO($input, $output);
+    protected function configureIO(
+        InputInterface $input,
+        OutputInterface $output
+    ) {
+        parent::configureIO($input, $output);
 
-		$output->setDecorated(
-			$input->hasParameterOption(array('--color'), true));
-	}
+        $output->setDecorated(
+            $input->hasParameterOption(array('--color'), true)
+        );
+    }
 
     /**
      * Disables the default options.
@@ -48,5 +50,4 @@ class Application
     {
         return new InputDefinition();
     }
-
 }
