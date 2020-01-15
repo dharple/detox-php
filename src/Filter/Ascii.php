@@ -42,6 +42,57 @@ class Ascii implements FilterInterface
     protected $transliteration = true;
 
     /**
+     * Quick and dirty: try iconv on the whole string.
+     *
+     * @param string $filename
+     *
+     * @return string
+     */
+    protected function convertString($filename)
+    {
+        $check = @iconv(
+            $this->operationalEncoding,
+            $this->getTargetEncoding(),
+            $filename
+        );
+
+        if ($check === false) {
+            $error = error_get_last();
+            throw new Exception($error['message']);
+        }
+        return $check;
+    }
+
+    /**
+     * Slow and painful: convert each character.
+     *
+     * @param string $filename
+     *
+     * @return string
+     */
+    protected function convertStringByCharacter($filename)
+    {
+        $targetEncoding = $this->getTargetEncoding();
+
+        $output = '';
+        for ($i = 0; $i < mb_strlen($filename); $i++) {
+            $check = @iconv(
+                $this->operationalEncoding,
+                $targetEncoding,
+                mb_substr($filename, $i, 1)
+            );
+
+            if ($check !== false) {
+                $output .= $check;
+            } else {
+                $output .= '_';
+            }
+        }
+
+        return $output;
+    }
+
+    /**
      * Filters a filename based on the rules of the filter.
      *
      * It's important to note that this only operates on the filename; any
@@ -140,56 +191,5 @@ class Ascii implements FilterInterface
         $this->transliteration = (bool) $transliteration;
 
         return $this;
-    }
-
-    /**
-     * Quick and dirty: try iconv on the whole string.
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    protected function convertString($filename)
-    {
-        $check = @iconv(
-            $this->operationalEncoding,
-            $this->getTargetEncoding(),
-            $filename
-        );
-
-        if ($check === false) {
-            $error = error_get_last();
-            throw new Exception($error['message']);
-        }
-        return $check;
-    }
-
-    /**
-     * Slow and painful: convert each character.
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    protected function convertStringByCharacter($filename)
-    {
-        $targetEncoding = $this->getTargetEncoding();
-
-        $output = '';
-        for ($i = 0; $i < mb_strlen($filename); $i++) {
-            $check = @iconv(
-                $this->operationalEncoding,
-                $targetEncoding,
-                mb_substr($filename, $i, 1)
-            );
-
-            if ($check !== false) {
-                $output .= $check;
-            } else {
-                $output .= '_';
-            }
-        }
-
-        return $output;
     }
 }
