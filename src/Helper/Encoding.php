@@ -31,7 +31,7 @@ trait Encoding
      *
      * This is the encoding that the system has defaulted to.
      *
-     * @var string
+     * @var ?string
      */
     protected $systemInternalEncoding = null;
 
@@ -40,7 +40,7 @@ trait Encoding
      *
      * This is the regex encoding that the system has defaulted to.
      *
-     * @var string
+     * @var ?string
      */
     protected $systemRegexEncoding = null;
 
