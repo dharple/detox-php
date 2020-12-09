@@ -1,12 +1,8 @@
-# Abandoned
-
-This project is now abandoned.  If you wish to become the maintainer, please
-contact me through [github].
-
+[![Build Status](https://travis-ci.org/dharple/detox-php.svg?branch=master)](https://travis-ci.org/dharple/detox-php)
 
 # In progress
 
-The main [detox] project was written in C.
+The main detox project is here: [https://github.com/dharple/detox](https://github.com/dharple/detox)
 
 Detox is in the middle of a major rewrite.  This is the module where the
 rewrite is occurring.  There is no guarantee that any code contained in here
@@ -46,5 +42,7 @@ easier to maintain.
 The PHP minimum version, 5.5.9, is imposed by the Symphony console library that
 I'm using.  The filters themselves passed on 5.4.x under TravisCI.
 
-[detox]: https://github.com/dharple/detox
-[github]: https://github.com/dharple/
+# Contact
+
+Doug Harple <detox.dharple@gmail.com>
+
