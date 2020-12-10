@@ -47,8 +47,10 @@ class Ascii implements FilterInterface
      * @param string $filename
      *
      * @return string
+     *
+     * @throws Exception
      */
-    protected function convertString($filename)
+    protected function convertString(string $filename)
     {
         $check = @iconv(
             $this->operationalEncoding,
@@ -70,7 +72,7 @@ class Ascii implements FilterInterface
      *
      * @return string
      */
-    protected function convertStringByCharacter($filename)
+    protected function convertStringByCharacter(string $filename)
     {
         $targetEncoding = $this->getTargetEncoding();
 
@@ -98,12 +100,12 @@ class Ascii implements FilterInterface
      * It's important to note that this only operates on the filename; any
      * additional path information will be returned as passed.
      *
-     * @param string $filename The filename to filter.
-     * @param string $encoding The encoding that the filename is in.
+     * @param string  $filename The filename to filter.
+     * @param ?string $encoding The encoding that the filename is in.
      *
      * @return string The filtered filename.
      */
-    public function filter($filename, $encoding = null)
+    public function filter(string $filename, ?string $encoding = null): string
     {
         $this->prepareEncodings();
 
@@ -168,11 +170,11 @@ class Ascii implements FilterInterface
     /**
      * Sets the current state of $convertByCharacter.
      *
-     * @param boolean $convertByCharacter;
+     * @param boolean $convertByCharacter ;
      *
      * @return $this Support method chaining.
      */
-    public function setConvertByCharacter($convertByCharacter)
+    public function setConvertByCharacter(bool $convertByCharacter)
     {
         $this->convertByCharacter = (bool) $convertByCharacter;
 
@@ -182,11 +184,11 @@ class Ascii implements FilterInterface
     /**
      * Sets the current state of $transliteration.
      *
-     * @param boolean $transliteration;
+     * @param boolean $transliteration ;
      *
      * @return $this Support method chaining.
      */
-    public function setTransliteration($transliteration)
+    public function setTransliteration(bool $transliteration)
     {
         $this->transliteration = (bool) $transliteration;
 

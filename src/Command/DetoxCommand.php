@@ -27,7 +27,7 @@ class DetoxCommand extends Command
 {
 
     /**
-     * Configues detox
+     * Configures detox
      */
     protected function configure()
     {
@@ -109,6 +109,9 @@ class DetoxCommand extends Command
 
     /**
      * Dumps option and argument information to stderr.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
     protected function debugOptions(InputInterface $input, OutputInterface $output)
     {
@@ -139,6 +142,11 @@ class DetoxCommand extends Command
 
     /**
      * Runs detox
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

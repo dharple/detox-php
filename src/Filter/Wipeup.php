@@ -51,12 +51,12 @@ class Wipeup implements FilterInterface
      * It's important to note that this only operates on the filename; any
      * additional path information will be returned as passed.
      *
-     * @param string $filename The filename to filter.
-     * @param string $encoding The encoding that the filename is in.
+     * @param string  $filename The filename to filter.
+     * @param ?string $encoding The encoding that the filename is in.
      *
      * @return string The filtered filename.
      */
-    public function filter($filename, $encoding = null)
+    public function filter(string $filename, ?string $encoding = null): string
     {
         $this->prepareEncodings();
 
@@ -111,11 +111,11 @@ class Wipeup implements FilterInterface
     /**
      * Sets the current state of $removeLeading.
      *
-     * @param boolean $removeLeading;
+     * @param boolean $removeLeading ;
      *
      * @return $this Support method chaining.
      */
-    public function setRemoveLeading($removeLeading)
+    public function setRemoveLeading(bool $removeLeading)
     {
         $this->removeLeading = (bool) $removeLeading;
 
@@ -125,11 +125,11 @@ class Wipeup implements FilterInterface
     /**
      * Sets the current state of $removeTrailing.
      *
-     * @param boolean $removeTrailing;
+     * @param boolean $removeTrailing ;
      *
      * @return $this Support method chaining.
      */
-    public function setRemoveTrailing($removeTrailing)
+    public function setRemoveTrailing(bool $removeTrailing)
     {
         $this->removeTrailing = (bool) $removeTrailing;
 

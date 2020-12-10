@@ -45,6 +45,8 @@ class Sequence
     /**
      * Adds a filter.  Filters will be applied to files in the order presented.
      *
+     * @param FilterInterface $filter
+     *
      * @return Sequence support method chaining
      */
     public function addFilter(FilterInterface $filter)
@@ -61,7 +63,7 @@ class Sequence
      *
      * @return string The filtered filename.
      */
-    public function filter($filename)
+    public function filter(string $filename)
     {
         $this->prepareEncodings();
 

@@ -43,12 +43,12 @@ class Safe implements FilterInterface
      * It's important to note that this only operates on the filename; any
      * additional path information will be returned as passed.
      *
-     * @param string $filename The filename to filter.
-     * @param string $encoding The encoding that the filename is in.
+     * @param string  $filename The filename to filter.
+     * @param ?string $encoding The encoding that the filename is in.
      *
      * @return string The filtered filename.
      */
-    public function filter($filename, $encoding = null)
+    public function filter(string $filename, ?string $encoding = null): string
     {
         $this->prepareEncodings();
 

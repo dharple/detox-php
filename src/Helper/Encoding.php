@@ -47,15 +47,15 @@ trait Encoding
     /**
      * Converts the operational filename back into the source encoding.
      *
-     * @param string $filename The filename to filter.
-     * @param string $encoding The source encoding for the filename.
+     * @param string  $filename The filename to filter.
+     * @param ?string $encoding The source encoding for the filename.
      *
      * @return string The filtered filename.
      */
     protected function convertFromOperationalEncoding(
-        $filename,
-        $encoding = null
-    ) {
+        string $filename,
+        ?string $encoding = null
+    ): string {
         $this->prepareEncodings();
 
         $encoding = $encoding ?: $this->systemInternalEncoding;
@@ -74,15 +74,15 @@ trait Encoding
     /**
      * Converts the source filename into the operational encoding.
      *
-     * @param string $filename The filename to filter.
-     * @param string $encoding The source encoding for the filename.
+     * @param string  $filename The filename to filter.
+     * @param ?string $encoding The source encoding for the filename.
      *
      * @return string The filtered filename.
      */
     protected function convertToOperationalEncoding(
-        $filename,
-        $encoding = null
-    ) {
+        string $filename,
+        ?string $encoding = null
+    ): string {
         $this->prepareEncodings();
 
         $encoding = $encoding ?: $this->systemInternalEncoding;
@@ -105,7 +105,7 @@ trait Encoding
      *
      * @return string The filtered filename.
      */
-    protected function getBaseFilename($filename)
+    protected function getBaseFilename(string $filename)
     {
         return basename($filename);
     }
@@ -134,12 +134,12 @@ trait Encoding
     /**
      * Replaces the base filename given the original filename.
      *
-     * @param string $filename        The original filenmae.
+     * @param string $filename        The original filename.
      * @param string $newBaseFilename The new base filename.
      *
      * @return string The new filename.
      */
-    protected function replaceBaseFilename($filename, $newBaseFilename)
+    protected function replaceBaseFilename(string $filename, string $newBaseFilename)
     {
         $dirname = dirname($filename);
         if ($dirname == '.' && mb_substr($filename, 0, 1) !== '.') {

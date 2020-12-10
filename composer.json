@@ -4,6 +4,7 @@
     "type": "library",
     "require": {
         "php": ">=7.2.5",
+        "ext-iconv": "*",
         "ext-mbstring": "*",
         "symfony/console": "^5.0"
     },

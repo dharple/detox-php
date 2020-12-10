@@ -1,5 +1,10 @@
-composer.lock
-/coverage/
+*.orig
+*.patch
+*.rej
 .phpunit.result.cache
-scrap.php
+/.idea/
+/dist/
 /vendor/
+composer-ci.json
+phpcs.xml
+phpunit.xml

@@ -11,6 +11,12 @@
 
 namespace Outsanity\Detox\Command;
 
+use Outsanity\Detox\Filter\Ascii;
+use Outsanity\Detox\Filter\Lower;
+use Outsanity\Detox\Filter\Safe;
+use Outsanity\Detox\Filter\Uncgi;
+use Outsanity\Detox\Filter\Wipeup;
+use Outsanity\Detox\Sequence;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -27,7 +33,7 @@ class InlineDetoxCommand extends Command
 {
 
     /**
-     * Configues detox
+     * Configures detox
      */
     protected function configure()
     {
@@ -82,6 +88,9 @@ class InlineDetoxCommand extends Command
 
     /**
      * Dumps option and argument information to stderr.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
     protected function debugOptions(InputInterface $input, OutputInterface $output)
     {
@@ -108,6 +117,11 @@ class InlineDetoxCommand extends Command
 
     /**
      * Runs inline-detox
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -117,26 +131,26 @@ class InlineDetoxCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        $sequence = new \Outsanity\Detox\Sequence();
+        $sequence = new Sequence();
 
         if ($input->getOption('uncgi')) {
-            $sequence->addFilter(new \Outsanity\Detox\Filter\Uncgi());
+            $sequence->addFilter(new Uncgi());
         }
 
         if ($input->getOption('ascii')) {
-            $sequence->addFilter(new \Outsanity\Detox\Filter\Ascii());
+            $sequence->addFilter(new Ascii());
         }
 
         if ($input->getOption('lower')) {
-            $sequence->addFilter(new \Outsanity\Detox\Filter\Lower());
+            $sequence->addFilter(new Lower());
         }
 
         if ($input->getOption('safe')) {
-            $sequence->addFilter(new \Outsanity\Detox\Filter\Safe());
+            $sequence->addFilter(new Safe());
         }
 
         if ($input->getOption('wipeup')) {
-            $sequence->addFilter(new \Outsanity\Detox\Filter\Wipeup());
+            $sequence->addFilter(new Wipeup());
         }
 
         while ($line = fgets(STDIN, PHP_MAXPATHLEN + 2)) {
