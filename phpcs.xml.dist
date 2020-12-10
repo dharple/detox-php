@@ -6,4 +6,8 @@
     <file>bin</file>
     <file>src</file>
 
+    <rule ref="Squiz.Commenting.FunctionComment.EmptyThrows">
+        <exclude-pattern>src/*</exclude-pattern>
+    </rule>
+
 </ruleset>

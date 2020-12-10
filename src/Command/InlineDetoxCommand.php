@@ -49,20 +49,6 @@ class InlineDetoxCommand extends Command
                     ),
 
                     new InputOption(
-                        'color',
-                        '',
-                        InputOption::VALUE_NONE,
-                        'enable colors'
-                    ),
-
-                    new InputOption(
-                        'help',
-                        'h',
-                        InputOption::VALUE_NONE,
-                        'this message'
-                    ),
-
-                    new InputOption(
                         'lower',
                         null,
                         InputOption::VALUE_NONE,
@@ -81,20 +67,6 @@ class InlineDetoxCommand extends Command
                         null,
                         InputOption::VALUE_NONE,
                         'decode CGI-encoded characters in the filename'
-                    ),
-
-                    new InputOption(
-                        'verbose',
-                        'v|vv|vvv',
-                        InputOption::VALUE_NONE,
-                        'be verbose'
-                    ),
-
-                    new InputOption(
-                        'version',
-                        'V',
-                        InputOption::VALUE_NONE,
-                        'show the current version'
                     ),
 
                     new InputOption(
@@ -145,26 +117,26 @@ class InlineDetoxCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        $sequence = new \Detox\Sequence();
+        $sequence = new \Outsanity\Detox\Sequence();
 
         if ($input->getOption('uncgi')) {
-            $sequence->addFilter(new \Detox\Filter\Uncgi());
+            $sequence->addFilter(new \Outsanity\Detox\Filter\Uncgi());
         }
 
         if ($input->getOption('ascii')) {
-            $sequence->addFilter(new \Detox\Filter\Ascii());
+            $sequence->addFilter(new \Outsanity\Detox\Filter\Ascii());
         }
 
         if ($input->getOption('lower')) {
-            $sequence->addFilter(new \Detox\Filter\Lower());
+            $sequence->addFilter(new \Outsanity\Detox\Filter\Lower());
         }
 
         if ($input->getOption('safe')) {
-            $sequence->addFilter(new \Detox\Filter\Safe());
+            $sequence->addFilter(new \Outsanity\Detox\Filter\Safe());
         }
 
         if ($input->getOption('wipeup')) {
-            $sequence->addFilter(new \Detox\Filter\Wipeup());
+            $sequence->addFilter(new \Outsanity\Detox\Filter\Wipeup());
         }
 
         while ($line = fgets(STDIN, PHP_MAXPATHLEN + 2)) {

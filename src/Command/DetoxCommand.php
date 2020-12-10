@@ -49,24 +49,10 @@ class DetoxCommand extends Command
                     ),
 
                     new InputOption(
-                        'color',
-                        '',
-                        InputOption::VALUE_NONE,
-                        'enable colors'
-                    ),
-
-                    new InputOption(
                         'dry-run',
-                        'n',
+                        null,
                         InputOption::VALUE_NONE,
                         'do a dry run (don\'t actually do anything)'
-                    ),
-
-                    new InputOption(
-                        'help',
-                        'h',
-                        InputOption::VALUE_NONE,
-                        'this message'
                     ),
 
                     new InputOption(
@@ -109,20 +95,6 @@ class DetoxCommand extends Command
                         null,
                         InputOption::VALUE_NONE,
                         'decode CGI-encoded characters in the filename'
-                    ),
-
-                    new InputOption(
-                        'verbose',
-                        'v|vv|vvv',
-                        InputOption::VALUE_NONE,
-                        'be verbose'
-                    ),
-
-                    new InputOption(
-                        'version',
-                        'V',
-                        InputOption::VALUE_NONE,
-                        'show the current version'
                     ),
 
                     new InputOption(

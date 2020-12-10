@@ -3,16 +3,14 @@
     "description": "Library and binary for translating problematic filenames into tame ones.",
     "type": "library",
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.2.5",
         "ext-mbstring": "*",
         "symfony/console": "^5.0"
     },
     "require-dev": {
         "outsanity/phpcs": "*",
         "phpstan/phpstan": "^0.12.5",
-        "phpunit/php-code-coverage": "^7.0",
-        "phpunit/phpunit": "^8.5",
-        "squizlabs/php_codesniffer": "^3.5"
+        "phpunit/phpunit": "^8.5"
     },
     "license": "BSD-2-Clause",
     "authors": [
