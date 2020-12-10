@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Detox\Filter;
+namespace Outsanity\Detox\Filter;
 
 /**
  * Defines the interface for all detox filters.

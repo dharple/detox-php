@@ -8,14 +8,14 @@
  * @since     File available since Release 2.0.0
  */
 
-namespace DetoxTest;
+namespace Outsanity\Detox\Tests;
 
-use Detox\Filter\Ascii;
-use Detox\Filter\Lower;
-use Detox\Filter\Safe;
-use Detox\Filter\Uncgi;
-use Detox\Filter\Wipeup;
-use Detox\Sequence;
+use Outsanity\Detox\Filter\Ascii;
+use Outsanity\Detox\Filter\Lower;
+use Outsanity\Detox\Filter\Safe;
+use Outsanity\Detox\Filter\Uncgi;
+use Outsanity\Detox\Filter\Wipeup;
+use Outsanity\Detox\Sequence;
 
 /**
  * Tests the sequence handler.

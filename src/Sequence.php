@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Detox;
+namespace Outsanity\Detox;
 
-use Detox\Filter\FilterInterface;
-use Detox\Helper\Encoding;
+use Outsanity\Detox\Filter\FilterInterface;
+use Outsanity\Detox\Helper\Encoding;
 
 /**
  * Holds a sequence of filters to apply to filenames.

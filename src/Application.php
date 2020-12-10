@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Detox;
+namespace Outsanity\Detox;
 
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputDefinition;

@@ -8,10 +8,10 @@
  * @since     File available since Release 2.0.0
  */
 
-namespace DetoxTest\Filter;
+namespace Outsanity\Detox\Tests\Filter;
 
-use Detox\Helper\Encoding;
-use Detox\Filter\FilterInterface;
+use Outsanity\Detox\Helper\Encoding;
+use Outsanity\Detox\Filter\FilterInterface;
 
 /**
  * Stub for full coverage.

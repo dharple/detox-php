@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Detox\Helper;
+namespace Outsanity\Detox\Helper;
 
 /**
  * Provides core functionality for the filters.

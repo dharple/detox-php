@@ -8,9 +8,9 @@
  * @since     File available since Release 2.0.0
  */
 
-namespace DetoxTest\Filter;
+namespace Outsanity\Detox\Tests\Filter;
 
-use Detox\Filter\Wipeup;
+use Outsanity\Detox\Filter\Wipeup;
 
 /**
  * Tests the wipeup filter.

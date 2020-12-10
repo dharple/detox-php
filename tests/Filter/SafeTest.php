@@ -8,9 +8,9 @@
  * @since     File available since Release 2.0.0
  */
 
-namespace DetoxTest\Filter;
+namespace Outsanity\Detox\Tests\Filter;
 
-use Detox\Filter\Safe;
+use Outsanity\Detox\Filter\Safe;
 
 /**
  * Tests the safe filter.

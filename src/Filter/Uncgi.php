@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Detox\Filter;
+namespace Outsanity\Detox\Filter;
 
-use Detox\Helper\Encoding;
+use Outsanity\Detox\Helper\Encoding;
 
 /**
  * Replaces any % followed by two hex characters with the appropriate UTF-8

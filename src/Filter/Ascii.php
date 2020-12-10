@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Detox\Filter;
+namespace Outsanity\Detox\Filter;
 
-use Detox\Helper\Encoding;
+use Outsanity\Detox\Helper\Encoding;
 
 /**
  * Transliterates any characters into ASCII.

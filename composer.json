@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": { 
-            "Detox\\": "src/"
+            "Outsanity\\Detox\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DetoxTest\\": "tests/"
+            "Outsanity\\Detox\\Tests\\": "tests/"
         }
     },
     "scripts": {

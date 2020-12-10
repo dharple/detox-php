@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Detox\Command;
+namespace Outsanity\Detox\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
