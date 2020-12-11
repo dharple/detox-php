@@ -42,6 +42,11 @@ easier to maintain.
 The PHP minimum version, 5.5.9, is imposed by the Symphony console library that
 I'm using.  The filters themselves passed on 5.4.x under TravisCI.
 
+# Known Limitations
+
+If some of the AsciiFilter unit tests fail, try forcing the LANG variable, like
+so: `LANG=en_US.UTF-8 composer test`.
+
 # Contact
 
 Doug Harple <detox.dharple@gmail.com>

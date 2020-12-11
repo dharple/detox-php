@@ -11,8 +11,6 @@
 
 namespace Outsanity\Detox\Tests\Filter;
 
-use PHPUnit\Framework\TestCase;
-
 /**
  * Full coverage; confirms that we don't double unset the filter.
  *
