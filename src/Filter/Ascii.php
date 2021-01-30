@@ -1,16 +1,18 @@
 <?php
+
 /**
- * Detox (https://github.com/dharple/detox/)
+ * This file is part of the Detox package.
  *
- * @link      https://github.com/dharple/detox/
- * @copyright Copyright (c) 2017 Doug Harple
- * @license   https://github.com/dharple/detox/blob/master/LICENSE
- * @since     File available since Release 2.0.0
+ * (c) Doug Harple <detox.dharple@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-namespace Detox\Filter;
+namespace Outsanity\Detox\Filter;
 
-use Detox\Helper\Encoding;
+use Behat\Transliterator\Transliterator;
+use Outsanity\Detox\Helper\Encoding;
 
 /**
  * Transliterates any characters into ASCII.
@@ -18,175 +20,189 @@ use Detox\Helper\Encoding;
  * Note that this does *not* change the underlying encoding.  If you pass in a
  * filename in UCS-2, we will return a filename in UCS-2, with any character
  * not in the ASCII charset transliterated into it.
- *
- * @since      Class available since Release 2.0.0
  */
-class Ascii
-	implements FilterInterface
+class Ascii implements FilterInterface
 {
-	use Encoding;
+    use Encoding;
 
-	/**
-	 * Whether or not we should always operate character by character.
-	 *
-	 * @var boolean
-	 */
-	protected $convertByCharacter = false;
+    /**
+     * Whether or not we should always operate character by character.
+     *
+     * @var boolean
+     */
+    protected $convertByCharacter = false;
 
-	/**
-	 * Whether or not we should transliterate characters.
-	 *
-	 * Disabling this means that any character above 0x7F in US-ASCII will
-	 * become '_';
-	 *
-	 * @var boolean
-	 */
-	protected $transliteration = true;
+    /**
+     * Whether or not we should transliterate characters.
+     *
+     * Disabling this means that any character above 0x7F in US-ASCII will
+     * become '_';
+     *
+     * @var boolean
+     */
+    protected $transliteration = true;
 
-	/**
-	 * Filters a filename based on the rules of the filter.
-	 *
-	 * It's important to note that this only operates on the filename; any
-	 * additional path information will be returned as passed.
-	 *
-	 * @param string $filename The filename to filter.
-	 * @param string $encoding The encoding that the filename is in.
-	 *
-	 * @return string The filtered filename.
-	 */
-	public function filter($filename, $encoding = null)
-	{
-		$this->prepareEncodings();
+    /**
+     * Quick and dirty: try iconv on the whole string.
+     *
+     * @param string $filename
+     *
+     * @return string
+     *
+     * @throws Exception
+     */
+    protected function convertString(string $filename)
+    {
+        if ($this->transliteration) {
+            $check = Transliterator::utf8toAscii($filename);
+        } else {
+            $check = @iconv(
+                $this->operationalEncoding,
+                $this->getTargetEncoding(),
+                $filename
+            );
 
-		$filename = $this->convertToOperationalEncoding($filename, $encoding);
+            if ($check === false) {
+                $error = error_get_last();
+                throw new Exception($error['message']);
+            }
+        }
 
-		$baseFilename = $this->getBaseFilename($filename);
+        return $check;
+    }
 
-		// try translit first:
+    /**
+     * Slow and painful: convert each character.
+     *
+     * @param string $filename
+     *
+     * @return string
+     */
+    protected function convertStringByCharacter(string $filename)
+    {
+        $targetEncoding = $this->getTargetEncoding();
 
-		$done = false;
-		if (!$this->convertByCharacter) {
-			try {
-				$baseFilename = $this->convertString($baseFilename);
-				$done = true;
-			} catch (Exception $e) {
-			}
-		}
+        $output = '';
+        for ($i = 0; $i < mb_strlen($filename); $i++) {
+            if ($this->transliteration) {
+                $check = Transliterator::utf8toAscii(mb_substr($filename, $i, 1));
+                $output .= ($check === '?') ? '_' : $check;
+            } else {
+                $check = @iconv(
+                    $this->operationalEncoding,
+                    $targetEncoding,
+                    mb_substr($filename, $i, 1)
+                );
 
-		if (!$done) {
-			$baseFilename = $this->convertStringByCharacter($baseFilename);
-		}
+                if ($check !== false) {
+                    $output .= $check;
+                } else {
+                    $output .= '_';
+                }
+            }
+        }
 
-		$filename = $this->replaceBaseFilename($filename, $baseFilename);
+        return $output;
+    }
 
-		$filename = $this->convertFromOperationalEncoding($filename, $encoding);
+    /**
+     * Filters a filename based on the rules of the filter.
+     *
+     * It's important to note that this only operates on the filename; any
+     * additional path information will be returned as passed.
+     *
+     * @param string  $filename The filename to filter.
+     * @param ?string $encoding The encoding that the filename is in.
+     *
+     * @return string The filtered filename.
+     */
+    public function filter(string $filename, ?string $encoding = null): string
+    {
+        $this->prepareEncodings();
 
-		$this->restoreEncodings();
+        $filename = $this->convertToOperationalEncoding($filename, $encoding);
 
-		return $filename;
-	}
+        $baseFilename = $this->getBaseFilename($filename);
 
-	/**
-	 * Returns the current state of $convertByCharacter.
-	 *
-	 * @return boolean
-	 */
-	public function getConvertByCharacter()
-	{
-		return $this->convertByCharacter;
-	}
+        // try translit first:
 
-	/**
-	 * Returns the target encoding.
-	 *
-	 * @return string
-	 */
-	protected function getTargetEncoding()
-	{
-		return $this->transliteration ? 'ASCII//TRANSLIT' : 'ASCII';
-	}
+        $done = false;
+        if (!$this->convertByCharacter) {
+            try {
+                $baseFilename = $this->convertString($baseFilename);
+                $done = true;
+            } catch (Exception $e) {
+            }
+        }
 
-	/**
-	 * Returns the current state of $transliteration.
-	 *
-	 * @return boolean
-	 */
-	public function getTransliteration()
-	{
-		return $this->transliteration;
-	}
+        if (!$done) {
+            $baseFilename = $this->convertStringByCharacter($baseFilename);
+        }
 
-	/**
-	 * Sets the current state of $convertByCharacter.
-	 *
-	 * @param boolean $convertByCharacter;
-	 *
-	 * @return $this Support method chaining.
-	 */
-	public function setConvertByCharacter($convertByCharacter)
-	{
-		$this->convertByCharacter = (boolean)$convertByCharacter;
+        $filename = $this->replaceBaseFilename($filename, $baseFilename);
 
-		return $this;
-	}
+        $filename = $this->convertFromOperationalEncoding($filename, $encoding);
 
-	/**
-	 * Sets the current state of $transliteration.
-	 *
-	 * @param boolean $transliteration;
-	 *
-	 * @return $this Support method chaining.
-	 */
-	public function setTransliteration($transliteration)
-	{
-		$this->transliteration = (boolean)$transliteration;
+        $this->restoreEncodings();
 
-		return $this;
-	}
+        return $filename;
+    }
 
-	/**
-	 * Quick and dirty: try iconv on the whole string.
-	 *
-	 * @param string $filename 
-	 *
-	 * @return string
-	 */
-	protected function convertString($filename)
-	{
-		$check = @iconv($this->operationalEncoding, $this->getTargetEncoding(),
-			$filename);
+    /**
+     * Returns the current state of $convertByCharacter.
+     *
+     * @return boolean
+     */
+    public function getConvertByCharacter()
+    {
+        return $this->convertByCharacter;
+    }
 
-		if ($check === false) {
-			$error = error_get_last();
-			throw new Exception($error['message']);
-		}
-		return $check;
-	}
+    /**
+     * Returns the target encoding.
+     *
+     * @return string
+     */
+    protected function getTargetEncoding()
+    {
+        return $this->transliteration ? 'ASCII//TRANSLIT' : 'ASCII';
+    }
 
-	/**
-	 * Slow and painful: convert each character.
-	 *
-	 * @param string $filename 
-	 *
-	 * @return string
-	 */
-	protected function convertStringByCharacter($filename)
-	{
-		$targetEncoding = $this->getTargetEncoding();
+    /**
+     * Returns the current state of $transliteration.
+     *
+     * @return boolean
+     */
+    public function getTransliteration()
+    {
+        return $this->transliteration;
+    }
 
-		$output = '';
-		for ($i = 0; $i < mb_strlen($filename); $i++) {
-			$check = @iconv($this->operationalEncoding, $targetEncoding,
-				mb_substr($filename, $i, 1));
+    /**
+     * Sets the current state of $convertByCharacter.
+     *
+     * @param boolean $convertByCharacter ;
+     *
+     * @return $this Support method chaining.
+     */
+    public function setConvertByCharacter(bool $convertByCharacter)
+    {
+        $this->convertByCharacter = (bool) $convertByCharacter;
 
-			if ($check !== false) {
-				$output .= $check;
-			} else {
-				$output .= '_';
-			}
-		}
+        return $this;
+    }
 
-		return $output;
-	}
+    /**
+     * Sets the current state of $transliteration.
+     *
+     * @param boolean $transliteration ;
+     *
+     * @return $this Support method chaining.
+     */
+    public function setTransliteration(bool $transliteration)
+    {
+        $this->transliteration = (bool) $transliteration;
 
+        return $this;
+    }
 }

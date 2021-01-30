@@ -1,130 +1,167 @@
 <?php
+
 /**
- * Detox (https://github.com/dharple/detox/)
+ * This file is part of the Detox package.
  *
- * @link      https://github.com/dharple/detox/
- * @copyright Copyright (c) 2017 Doug Harple
- * @license   https://github.com/dharple/detox/blob/master/LICENSE
- * @since     File available since Release 2.0.0
+ * (c) Doug Harple <detox.dharple@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-namespace Detox\Command;
+namespace Outsanity\Detox\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Provides the base detox command.
- *
- * @since      Class available since Release 2.0.0
  */
 class DetoxCommand extends Command
 {
 
-	/**
-	 * Configues detox
-	 */
-	protected function configure()
-	{
-		$this
-			->setName('detox')
-			->setDefinition(
-				new InputDefinition(array(
-					new InputArgument('path', InputArgument::IS_ARRAY,
-						'the files or directories to operate on'),
+    /**
+     * Configures detox
+     */
+    protected function configure()
+    {
+        $this
+            ->setName('detox')
+            ->setDefinition(
+                new InputDefinition([
+                    new InputArgument(
+                        'path',
+                        InputArgument::IS_ARRAY,
+                        'the files or directories to operate on'
+                    ),
 
-					new InputOption('ascii', null, InputOption::VALUE_NONE,
-						'tranlisterate or remove all non-ASCII characters'),
+                    new InputOption(
+                        'ascii',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'tranlisterate or remove all non-ASCII characters'
+                    ),
 
-					new InputOption('color', '', InputOption::VALUE_NONE,
-						'enable colors'),
+                    new InputOption(
+                        'dry-run',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'do a dry run (don\'t actually do anything)'
+                    ),
 
-					new InputOption('dry-run', 'n', InputOption::VALUE_NONE,
-						'do a dry run (don\'t actually do anything)'),
+                    new InputOption(
+                        'inline',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'run inline mode'
+                    ),
 
-					new InputOption('help', 'h', InputOption::VALUE_NONE,
-						'this message'),
+                    new InputOption(
+                        'lower',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'convert filenames to lower case'
+                    ),
 
-					new InputOption('inline', null, InputOption::VALUE_NONE,
-						'run inline mode'),
+                    new InputOption(
+                        'recursive',
+                        'r',
+                        InputOption::VALUE_NONE,
+                        'be recursive'
+                    ),
 
-					new InputOption('lower', null, InputOption::VALUE_NONE,
-						'convert filenames to lower case'),
+                    new InputOption(
+                        'safe',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'convert filenames to command-line safe filenames'
+                    ),
 
-					new InputOption('recursive', 'r', InputOption::VALUE_NONE,
-						'be recursive'),
+                    new InputOption(
+                        'special',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'work on links and special files'
+                    ),
 
-					new InputOption('safe', null, InputOption::VALUE_NONE,
-						'convert filenames to command-line safe filenames'),
+                    new InputOption(
+                        'uncgi',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'decode CGI-encoded characters in the filename'
+                    ),
 
-					new InputOption('special', null, InputOption::VALUE_NONE,
-						'work on links and special files'),
+                    new InputOption(
+                        'wipeup',
+                        null,
+                        InputOption::VALUE_NONE,
+                        'remove duplicate - and _ characters'
+                    ),
+                ])
+            );
+    }
 
-					new InputOption('uncgi', null, InputOption::VALUE_NONE,
-						'decode CGI-encoded characters in the filename'),
+    /**
+     * Dumps option and argument information to stderr.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function debugOptions(InputInterface $input, OutputInterface $output)
+    {
+        $io = new SymfonyStyle(
+            $input,
+            ($output instanceof ConsoleOutputInterface) ? $output->getErrorOutput() : $output
+        );
 
-					new InputOption('verbose', 'v|vv|vvv', InputOption::VALUE_NONE,
-						'be verbose'),
+        $io->text('files and directories to parse:');
+        $io->listing($input->getArgument('path'));
 
-					new InputOption('version', 'V', InputOption::VALUE_NONE,
-						'show the current version'),
+        $io->table(
+            ['feature', 'selected'],
+            [
+                ['ascii filter', $input->getOption('ascii') ? 'y' : 'n'],
+                ['dry run', $input->getOption('dry-run') ? 'y' : 'n'],
+                ['inline mode', $input->getOption('inline') ? 'y' : 'n'],
+                ['lower filter', $input->getOption('lower') ? 'y' : 'n'],
+                ['recursive mode', $input->getOption('recursive') ? 'y' : 'n'],
+                ['safe filter', $input->getOption('safe') ? 'y' : 'n'],
+                ['special file mode', $input->getOption('special') ? 'y' : 'n'],
+                ['uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'],
+                ['verbose mode', $input->getOption('verbose') ? 'y' : 'n'],
+                ['wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'],
+            ]
+        );
+    }
 
-					new InputOption('wipeup', null, InputOption::VALUE_NONE,
-						'remove duplicate - and _ characters'),
-				))
-			);
-	}
+    /**
+     * Runs detox
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
+            $this->debugOptions($input, $output);
+        }
 
-	/**
-	 * Dumps option and argument information to stderr.
-	 */
-	protected function debugOptions(InputInterface $input, OutputInterface $output)
-	{
-		$io = new SymfonyStyle($input, $output->getErrorOutput());
+        $io = new SymfonyStyle($input, $output);
 
-		$io->text('files and directories to parse:');
-		$io->listing($input->getArgument('path'));
+        if (count($input->getArgument('path')) == 0) {
+            $io->error('please specify at least one file or path to operate upon');
+            $io->text($this->getSynopsis());
+            return 1;
+        }
 
-		$io->table(
-			array('feature', 'selected'),
-			array(
-				array('ascii filter', $input->getOption('ascii') ? 'y' : 'n'),
-				array('dry run', $input->getOption('dry-run') ? 'y' : 'n'),
-				array('inline mode', $input->getOption('inline') ? 'y' : 'n'),
-				array('lower filter', $input->getOption('lower') ? 'y' : 'n'),
-				array('recursive mode', $input->getOption('recursive') ? 'y' : 'n'),
-				array('safe filter', $input->getOption('safe') ? 'y' : 'n'),
-				array('special file mode', $input->getOption('special') ? 'y' : 'n'),
-				array('uncgi filter', $input->getOption('uncgi') ? 'y' : 'n'),
-				array('verbose mode', $input->getOption('verbose') ? 'y' : 'n'),
-				array('wipeup filter', $input->getOption('wipeup') ? 'y' : 'n'),
-			)
-		);
-	}
-
-	/**
-	 * Runs detox
-	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
-	{
-		if ($output->getVerbosity() == OutputInterface::VERBOSITY_DEBUG) {
-			$this->debugOptions($input, $output);
-		}
-
-		$io = new SymfonyStyle($input, $output);
-
-		if (count($input->getArgument('path')) == 0) {
-			$io->error('please specify at least one file or path to operate upon');
-			$io->text($this->getSynopsis());
-			return;
-		}
-
-	}
-
+        return 0;
+    }
 }
-

@@ -1,86 +1,86 @@
 <?php
+
 /**
- * Detox (https://github.com/dharple/detox/)
+ * This file is part of the Detox package.
  *
- * @link      https://github.com/dharple/detox/
- * @copyright Copyright (c) 2017 Doug Harple
- * @license   https://github.com/dharple/detox/blob/master/LICENSE
- * @since     File available since Release 2.0.0
+ * (c) Doug Harple <detox.dharple@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-namespace Detox;
+namespace Outsanity\Detox;
 
-use Detox\Filter\FilterInterface;
-use Detox\Helper\Encoding;
+use Outsanity\Detox\Filter\FilterInterface;
+use Outsanity\Detox\Helper\Encoding;
 
 /**
  * Holds a sequence of filters to apply to filenames.
- *
- * @since      Class available since Release 2.0.0
  */
 class Sequence
 {
-	use Encoding;
+    use Encoding;
 
-	/**
-	 * A sequence of filters to apply.
-	 *
-	 * @var FilterInterface[]
-	 */
-	protected $filters = [];
+    /**
+     * A sequence of filters to apply.
+     *
+     * @var FilterInterface[]
+     */
+    protected $filters = [];
 
-	/**
-	 * The input encoding to use.
-	 *
-	 * @var string
-	 */
-	protected $inputEncoding = 'UTF-8';
+    /**
+     * The input encoding to use.
+     *
+     * @var string
+     */
+    protected $inputEncoding = 'UTF-8';
 
-	/**
-	 * The output encoding to use.
-	 *
-	 * @var string
-	 */
-	protected $outputEncoding = 'UTF-8';
+    /**
+     * The output encoding to use.
+     *
+     * @var string
+     */
+    protected $outputEncoding = 'UTF-8';
 
-	/**
-	 * Adds a filter.  Filters will be applied to files in the order presented.
-	 *
-	 * @return Sequence support method chaining
-	 */
-	public function addFilter(FilterInterface $filter)
-	{
-		$this->filters[] = $filter;
+    /**
+     * Adds a filter.  Filters will be applied to files in the order presented.
+     *
+     * @param FilterInterface $filter
+     *
+     * @return Sequence support method chaining
+     */
+    public function addFilter(FilterInterface $filter)
+    {
+        $this->filters[] = $filter;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Runs a sequence of filters against a filename.
-	 *
-	 * @param string $filename The filename to filter.
-	 *
-	 * @return string The filtered filename.
-	 */
-	public function filter($filename)
-	{
-		$this->prepareEncodings();
+    /**
+     * Runs a sequence of filters against a filename.
+     *
+     * @param string $filename The filename to filter.
+     *
+     * @return string The filtered filename.
+     */
+    public function filter(string $filename)
+    {
+        $this->prepareEncodings();
 
-		$filename = $this->convertToOperationalEncoding($filename, $this->inputEncoding);
+        $filename = $this->convertToOperationalEncoding($filename, $this->inputEncoding);
 
-		$baseFilename = $this->getBaseFilename($filename);
+        $baseFilename = $this->getBaseFilename($filename);
 
-		foreach ($this->filters as $filter) {
-			$baseFilename = $filter->filter($baseFilename, $this->operationalEncoding);
-		}
+        foreach ($this->filters as $filter) {
+            $baseFilename = $filter->filter($baseFilename, $this->operationalEncoding);
+        }
 
-		$filename = $this->replaceBaseFilename($filename, $baseFilename);
+        $filename = $this->replaceBaseFilename($filename, $baseFilename);
 
-		$filename = $this->convertFromOperationalEncoding($filename, $this->outputEncoding);
+        $filename = $this->convertFromOperationalEncoding($filename, $this->outputEncoding);
 
-		$this->restoreEncodings();
+        $this->restoreEncodings();
 
-		return $filename;
-	}
-
+        return $filename;
+    }
 }

@@ -1,4 +1,10 @@
+*.orig
+*.patch
+*.rej
+.phpunit.result.cache
+/.idea/
+/dist/
 /vendor/
-/coverage/
-scrap.php
-composer.lock
+composer-ci.json
+phpcs.xml
+phpunit.xml

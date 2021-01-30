@@ -10,21 +10,22 @@
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-use Detox\Application;
-use Detox\Command\InlineDetoxCommand;
+use Outsanity\Detox\Command\InlineDetoxCommand;
+use Symfony\Component\Console\Application;
 
 try {
-	$application = new Application('inline-detox', '0.1.0');
-	$application->setCatchExceptions(false);
-	$command = new InlineDetoxCommand();
-	$application->add($command);
-	$application->setDefaultCommand($command->getName(), true);
-	$application->run();
-} catch (\Detox\Filter\Exception $e) {
-	fprintf(STDERR, 'FILTER ERROR: ' . $e->getMessage() . "\n");
-	exit(-1);
-} catch (\Exception $e) {
-	fprintf(STDERR, 'INTERNAL ERROR: ' . $e->getMessage() . "\n");
-	exit(-2);
+    $application = new Application('inline-detox', '0.1.0');
+    $application->setCatchExceptions(false);
+    $command = new InlineDetoxCommand();
+    $application->add($command);
+    $application->setDefaultCommand($command->getName(), true);
+    $application->run();
+} catch (\Outsanity\Detox\Filter\Exception $e) {
+    fprintf(STDERR, 'FILTER ERROR: ' . $e->getMessage() . "\n");
+    exit(-1);
+} catch (Exception $e) {
+    fprintf(STDERR, 'INTERNAL ERROR: ' . $e->getMessage() . "\n");
+    exit(-2);
 }
 
+// vim:ai:cin:et:ts=4:sw=4:fo+=or
