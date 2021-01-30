@@ -69,6 +69,10 @@ class AsciiTest extends FilterTest
             'output' => 'Hello world, Kalemera kosme',
         ],
 
+        [
+            'input' => '⠓⠑⠇⠇⠕ ⠺⠕⠗⠇⠙',
+            'output' => 'hello world', 
+        ],
     ];
 
     /**
