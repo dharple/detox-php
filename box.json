@@ -1,0 +1,18 @@
+{
+    "main": "bin/detox",
+    "output": "dist/detox.phar",
+
+    "directories": ["src"],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["test", "tests"],
+            "in": "vendor"
+         }
+    ],
+    "stub": "phar/stub.php",
+    "compression": "GZ",
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php"
+    ]
+}

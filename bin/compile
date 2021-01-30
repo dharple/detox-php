@@ -1,0 +1,59 @@
+#!/usr/bin/env -S php -d phar.readonly=0
+<?php
+
+/**
+ * This file is part of the detox-php package.
+ *
+ * (c) Doug Harple <dharple@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
+ * Builds a .phar archive for deployment.
+ *
+ * Thanks to: https://blog.programster.org/creating-phar-files
+ */
+
+$base = dirname(__DIR__);
+$distDir = $base . '/dist';
+$pharFile = $distDir . '/detox.phar';
+
+if (!is_dir($distDir)) {
+    mkdir($distDir);
+}
+
+if (file_exists($pharFile)) {
+    unlink($pharFile);
+}
+
+$phar = new Phar($pharFile);
+
+try {
+    $phar->buildFromDirectory($base, '@[.]php$@');
+
+    $contents = file($base . '/bin/detox');
+    array_shift($contents);
+    $phar->addFromString('bin/detox', implode('', $contents));
+
+    $phar->setStub(file_get_contents($base . '/phar/stub.php'));
+
+    $phar->setSignatureAlgorithm(Phar::SHA512);
+} catch (Exception $e) {
+    fprintf(STDERR, sprintf("ERROR: %s\n", $e->getMessage()));
+    fprintf(STDERR, sprintf("%s\n", $e->getTraceAsString()));
+    exit(-2);
+}
+
+try {
+    $phar->compressFiles(Phar::GZ);
+} catch (Exception $e) {
+    fprintf(STDERR, "notice: could not compress archive\n");
+}
+
+chmod($pharFile, 0755);
+
+printf("%s created\n", $pharFile);
+
+// vim:ai:cin:et:ts=4:sw=4:fo+=or

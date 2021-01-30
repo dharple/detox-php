@@ -1,5 +1,3 @@
-# Tames Problematic Filenames
-
 [![Build Status](https://travis-ci.com/dharple/detox-php.svg?branch=main)](https://travis-ci.com/dharple/detox-php)
 
 # Warning
@@ -32,6 +30,49 @@ easier to maintain.
 - There is, however, a compelling reason to replace characters that have
   special meaning on the typical Linux command line.  Characters like `$`, `:`,
   `(`, `)`, `[`, `]` are all problematic more or less.
+
+# Requirements
+
+* composer
+* git
+* php (7.2.5 or higher)
+
+# Installation
+
+```bash
+git clone https://github.com/dharple/detox-php.git
+cd detox-php
+composer check-platform-reqs
+```
+
+If everything looks good after the previous check, install the project
+dependencies:
+
+```bash
+composer install --no-dev -o
+```
+
+If you have [box] installed globally, you can use that to build the utility:
+
+```bash
+box compile
+box compile -c box-inline.json
+```
+
+Otherwise, we provide our own:
+
+```bash
+bin/compile
+bin/compile-inline
+```
+
+Finally, install the resulting PHAR file to /usr/local/bin:
+
+```bash
+sudo cp dist/detox.phar /usr/local/bin/detox
+sudo cp dist/inline-detox.phar /usr/local/bin/inline-detox
+```
+
 
 # Contact
 

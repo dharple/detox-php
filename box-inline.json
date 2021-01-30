@@ -1,0 +1,18 @@
+{
+    "main": "bin/inline-detox",
+    "output": "dist/inline-detox.phar",
+
+    "directories": ["src"],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["test", "tests"],
+            "in": "vendor"
+         }
+    ],
+    "stub": "phar/stub-inline.php",
+    "compression": "GZ",
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php"
+    ]
+}

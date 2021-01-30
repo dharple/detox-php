@@ -11,6 +11,12 @@
 
 namespace Outsanity\Detox\Command;
 
+use Outsanity\Detox\Filter\Ascii;
+use Outsanity\Detox\Filter\Lower;
+use Outsanity\Detox\Filter\Safe;
+use Outsanity\Detox\Filter\Uncgi;
+use Outsanity\Detox\Filter\Wipeup;
+use Outsanity\Detox\Sequence;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -160,6 +166,32 @@ class DetoxCommand extends Command
             $io->error('please specify at least one file or path to operate upon');
             $io->text($this->getSynopsis());
             return 1;
+        }
+
+        $sequence = new Sequence();
+
+        if ($input->getOption('uncgi')) {
+            $sequence->addFilter(new Uncgi());
+        }
+
+        if ($input->getOption('ascii')) {
+            $sequence->addFilter(new Ascii());
+        }
+
+        if ($input->getOption('lower')) {
+            $sequence->addFilter(new Lower());
+        }
+
+        if ($input->getOption('safe')) {
+            $sequence->addFilter(new Safe());
+        }
+
+        if ($input->getOption('wipeup')) {
+            $sequence->addFilter(new Wipeup());
+        }
+
+        foreach ($input->getArgument('path') as $path) {
+            $io->text(sprintf('rename %s => %s', $path, $sequence->filter($path)));
         }
 
         return 0;
