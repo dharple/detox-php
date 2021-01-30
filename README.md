@@ -79,3 +79,4 @@ sudo cp dist/inline-detox.phar /usr/local/bin/inline-detox
 Doug Harple <detox.dharple@gmail.com>
 
 [Detox]: https://github.com/dharple/detox
+[box]: https://github.com/box-project/box
