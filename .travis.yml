@@ -1,13 +1,23 @@
 language: php
+dist: xenial
+os: linux
 php:
-  - '7.2'
-  - '7.3'
-  - '7.4'
+  - 7.2
+  - 7.3
+  - 7.4
+  - 8.0
+  - nightly
 
-install:
-  - travis_retry composer install --no-interaction
-  - iconv -V
+before_script:
+  - jq 'del(."require-dev")' composer.json > composer-ci.json
+  - COMPOSER=composer-ci.json composer require --dev phpunit/phpunit
 
 script:
+  - COMPOSER=composer-ci.json composer install
   - vendor/bin/phpunit
+  - composer install --no-dev -o
+  - php -d phar.readonly=0 bin/compile
 
+cache:
+  directories:
+  - $HOME/.cache/composer/files
