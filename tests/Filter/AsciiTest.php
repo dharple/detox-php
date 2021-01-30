@@ -60,25 +60,13 @@ class AsciiTest extends FilterTest
         //
 
         [
-            'input' => '†, ‡, ‰, •, 3–4, —, −5, +5, ™, …',
-            'output' => '+, ?, ?, o, 3-4, --, -5, +5, (TM), ...'
+            'input' => '†, ‡, ‰, •, 3–4, —, +5, ™, …',
+            'output' => '+, ++, %0, *, 3-4, --, +5, tm, ...'
         ],
 
         [
-            'input' => 'Hello world, Καλημέρα κόσμε, コンニチハ',
-            'output' => 'Hello world, ????u??? ???u?, ?????',
-            'minimumIconvVersion' => '2.23',
-        ],
-
-        [
-            'input' => '⡌⠁⠧⠑ ⠼⠁⠒  ⡍⠜⠇⠑⠹⠰⠎ ⡣⠕⠌',
-            'output' => '???? ???  ??????? ???'
-        ],
-
-        [
-            'input' => 'ði ıntəˈnæʃənəl fəˈnɛtık əsoʊsiˈeıʃn',
-            'output' => 'di int?\'nae??n?l f?\'netik ?so?si\'ei?n',
-            'minimumIconvVersion' => '2.23',
+            'input' => 'Hello world, Καλημέρα κόσμε',
+            'output' => 'Hello world, Kalemera kosme',
         ],
 
     ];
@@ -113,7 +101,7 @@ class AsciiTest extends FilterTest
                         $this->assertEquals(
                             $path . $test['output'],
                             $filter->filter($path . $test['input'], $encoding),
-                            'Ascii filter failed.  Encoding is set to: ' . $encoding
+                            sprintf('Ascii filter failed.  Encoding is set to: %s, source is: %s, byCharacter is %s', $encoding, $test['input'], $byCharacter ? 'true' : 'false')
                         );
                     }
                 }
@@ -233,7 +221,7 @@ class AsciiTest extends FilterTest
                         $this->assertEquals(
                             $expected,
                             $filter->filter($original, $encoding),
-                            'Ascii filter failed.  Encoding is set to: ' . $encoding . ', source is: ' . $test['input']
+                            sprintf('Ascii filter failed.  Encoding is set to: %s, source is: %s, byCharacter is %s', $encoding, $test['input'], $byCharacter ? 'true' : 'false')
                         );
                     }
                 }

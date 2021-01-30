@@ -11,6 +11,7 @@
 
 namespace Outsanity\Detox\Filter;
 
+use Behat\Transliterator\Transliterator;
 use Outsanity\Detox\Helper\Encoding;
 
 /**
@@ -52,16 +53,21 @@ class Ascii implements FilterInterface
      */
     protected function convertString(string $filename)
     {
-        $check = @iconv(
-            $this->operationalEncoding,
-            $this->getTargetEncoding(),
-            $filename
-        );
+        if ($this->transliteration) {
+            $check = Transliterator::utf8toAscii($filename);
+        } else {
+            $check = @iconv(
+                $this->operationalEncoding,
+                $this->getTargetEncoding(),
+                $filename
+            );
 
-        if ($check === false) {
-            $error = error_get_last();
-            throw new Exception($error['message']);
+            if ($check === false) {
+                $error = error_get_last();
+                throw new Exception($error['message']);
+            }
         }
+
         return $check;
     }
 
@@ -78,16 +84,21 @@ class Ascii implements FilterInterface
 
         $output = '';
         for ($i = 0; $i < mb_strlen($filename); $i++) {
-            $check = @iconv(
-                $this->operationalEncoding,
-                $targetEncoding,
-                mb_substr($filename, $i, 1)
-            );
-
-            if ($check !== false) {
-                $output .= $check;
+            if ($this->transliteration) {
+                $check = Transliterator::utf8toAscii(mb_substr($filename, $i, 1));
+                $output .= ($check === '?') ? '_' : $check;
             } else {
-                $output .= '_';
+                $check = @iconv(
+                    $this->operationalEncoding,
+                    $targetEncoding,
+                    mb_substr($filename, $i, 1)
+                );
+
+                if ($check !== false) {
+                    $output .= $check;
+                } else {
+                    $output .= '_';
+                }
             }
         }
 
