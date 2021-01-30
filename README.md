@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dharple/detox-php.svg?branch=master)](https://travis-ci.org/dharple/detox-php)
+[![Build Status](https://travis-ci.com/dharple/detox-php.svg?branch=main)](https://travis-ci.com/dharple/detox-php)
 
 # In progress
 
