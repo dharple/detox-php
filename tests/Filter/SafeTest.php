@@ -63,6 +63,10 @@ class SafeTest extends FilterTest
             'output' => 'slashes_here',
         ],
 
+        [
+            'input' => 'mÉ Æ.txt',
+            'output' => 'mÉ_Æ.txt',
+        ],
 
     ];
 
