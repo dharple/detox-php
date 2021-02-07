@@ -10,8 +10,8 @@
         "symfony/console": "^5.0"
     },
     "require-dev": {
-        "outsanity/phpcs": "*",
-        "phpstan/phpstan": "^0.12.5",
+        "outsanity/phpcs": ">=0.4.0",
+        "phpstan/phpstan": "^0.12.34",
         "phpunit/phpunit": "^8.5"
     },
     "license": "BSD-2-Clause",

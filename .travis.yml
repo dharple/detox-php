@@ -10,7 +10,7 @@ php:
 
 before_script:
   - jq 'del(."require-dev")' composer.json > composer-ci.json
-  - COMPOSER=composer-ci.json composer require --dev phpunit/phpunit
+  - COMPOSER=composer-ci.json composer require --prefer-lowest --dev phpunit/phpunit
 
 script:
   - COMPOSER=composer-ci.json composer install
