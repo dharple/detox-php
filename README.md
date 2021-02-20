@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/dharple/detox-php.svg?branch=main)](https://travis-ci.com/dharple/detox-php)
-
 # Warning
 
 [Detox] is in the middle of a major rewrite.
