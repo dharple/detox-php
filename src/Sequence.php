@@ -63,7 +63,7 @@ class Sequence
      *
      * @return string The filtered filename.
      */
-    public function filter(string $filename)
+    public function filter(string $filename): string
     {
         $this->prepareEncodings();
 
