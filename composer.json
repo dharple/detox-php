@@ -3,7 +3,7 @@
     "description": "Library and binary for translating problematic filenames into tame ones.",
     "type": "library",
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4.3",
         "ext-iconv": "*",
         "ext-mbstring": "*",
         "behat/transliterator": "^1.3",
