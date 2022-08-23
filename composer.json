@@ -23,6 +23,9 @@
     ],
     "minimum-stability": "stable",
     "config": {
+        "platform": {
+            "php": "7.4.3"
+        },
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
