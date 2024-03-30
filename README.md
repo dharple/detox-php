@@ -1,3 +1,24 @@
+# Abandoned
+
+This project was initially started to replace version 1 of [detox], which was
+written in C, with a version written in PHP.  I choose PHP because it is my
+primary development language these days, both professionally and personally.
+
+I also wanted to leverage modern libraries, to help with transliterating
+characters, and maybe simplify the process for all.  Unfortunately, truly
+broken filenames, e.g. invalid bytes in a UTF-8 character, cannot be handled
+like this, and repeatedly broke the foundation I was trying to use.  In the
+end, I opted to do a refresh in C, migrating the legacy codebase to modern
+practices.
+
+For that reason, I am abandoning this project, and archiving the repository.
+
+Thank you.
+
+---
+
+The original README follows below.
+
 # Warning
 
 [Detox] is in the middle of a major rewrite.
@@ -77,4 +98,5 @@ sudo cp dist/inline-detox.phar /usr/local/bin/inline-detox
 Doug Harple <detox.dharple@gmail.com>
 
 [Detox]: https://github.com/dharple/detox
+[detox]: https://github.com/dharple/detox
 [box]: https://github.com/box-project/box

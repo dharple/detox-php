@@ -1,6 +1,7 @@
 {
     "name": "dharple/detox-php",
     "description": "Library and binary for translating problematic filenames into tame ones.",
+    "abandoned": true,
     "type": "library",
     "require": {
         "php": ">=7.4.3",
